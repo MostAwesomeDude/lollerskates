@@ -3,9 +3,11 @@ module Loller where
 data Item = Empty
           | BootsOfSpeed
           | DoransRing
+          | RegrowthPendant
     deriving (Enum, Eq, Ord, Show)
 
-data Stats = Stats { health :: Int
+data Stats = Stats { price :: Int
+                   , health :: Int
                    , hRegen :: Int
                    , mana :: Int
                    , mRegen :: Int
@@ -14,21 +16,24 @@ data Stats = Stats { health :: Int
     deriving (Show)
 
 stats :: Stats
-stats = Stats 0 0 0 0 0 0
+stats = Stats 0 0 0 0 0 0 0
 
 statsFor :: Item -> Stats
-statsFor DoransRing = stats { health = 100, mRegen = 7, aP = 15 }
+statsFor BootsOfSpeed = stats { price = 300 }
+statsFor DoransRing = stats { price = 475, health = 100, mRegen = 7, aP = 15 }
+statsFor RegrowthPendant = stats { price = 435, hRegen = 15 }
 statsFor _ = stats
 
 addStats :: Stats -> Stats -> Stats
 addStats first second = let
+    p = price first + price second
     h = health first + health second
     hr = hRegen first + hRegen second
     m = mana first + mana second
     mr = mRegen first + mRegen second
     ad = aD first + aD second
     ap = aP first + aP second
-    in Stats h hr m mr ad ap
+    in Stats p h hr m mr ad ap
 
 withGuard :: ([Item] -> Bool) -> [Item] -> [Item]
 withGuard f is = if f is then is else []
