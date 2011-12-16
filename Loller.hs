@@ -1,5 +1,8 @@
 module Loller where
 
+import Data.List
+import Data.Ord
+
 data Item = Empty
           | AmplifyingTome
           | BFSword
@@ -11,6 +14,7 @@ data Item = Empty
           | Dagger
           | DoransRing
           | NeedlesslyLargeRod
+          | RecurveBow
           | RegrowthPendant
     deriving (Enum, Eq, Ord, Show)
 
@@ -42,6 +46,7 @@ statsFor ClothArmor = stats { price = 300, armor = 18 }
 statsFor Dagger = stats { price = 420, aS = 1.15 }
 statsFor DoransRing = stats { price = 475, health = 100, mRegen = 7, aP = 15 }
 statsFor NeedlesslyLargeRod = stats { price = 1600, aP = 80 }
+statsFor RecurveBow = stats { price = 1050, aS = 1.4 }
 statsFor RegrowthPendant = stats { price = 435, hRegen = 15 }
 statsFor _ = stats
 
@@ -104,3 +109,7 @@ withBoots = withGuard hasBoots
 -- | Sum up the stats for a build.
 buildStats :: [Item] -> Stats
 buildStats = foldr (addStats . statsFor) stats
+
+-- | Find the maximum build in a given attribute.
+maxBuild :: Ord a => (Stats -> a) -> [[Item]] -> [Item]
+maxBuild attr is = maximumBy (comparing $ attr . buildStats) is
