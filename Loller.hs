@@ -131,14 +131,19 @@ fullBuild = do
     return [one, two, three, four, five, six]
 
 isBoots :: Item -> Bool
-isBoots BootsOfSpeed = True
-isBoots _ = False
+isBoots i = i `elem` [BootsOfSpeed]
 
 hasBoots :: [Item] -> Bool
 hasBoots = any isBoots
 
 withBoots :: [Item] -> [Item]
 withBoots = withGuard hasBoots
+
+isVaried :: [Item] -> Bool
+isVaried is = length (nub is) == 6
+
+withVaried :: [Item] -> [Item]
+withVaried = withGuard isVaried
 
 -- | Sum up the stats for a build.
 buildStats :: [Item] -> Stats
