@@ -1,8 +1,11 @@
 module Loller where
 
 data Item = Empty
+          | AmplifyingTome
+          | BlastingWand
           | BootsOfSpeed
           | DoransRing
+          | NeedlesslyLargeRod
           | RegrowthPendant
     deriving (Enum, Eq, Ord, Show)
 
@@ -19,8 +22,11 @@ stats :: Stats
 stats = Stats 0 0 0 0 0 0 0
 
 statsFor :: Item -> Stats
+statsFor AmplifyingTome = stats { price = 435, aP = 20 }
+statsFor BlastingWand = stats { price = 860, aP = 40 }
 statsFor BootsOfSpeed = stats { price = 300 }
 statsFor DoransRing = stats { price = 475, health = 100, mRegen = 7, aP = 15 }
+statsFor NeedlesslyLargeRod = stats { price = 1600, aP = 80 }
 statsFor RegrowthPendant = stats { price = 435, hRegen = 15 }
 statsFor _ = stats
 
