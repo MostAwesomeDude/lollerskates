@@ -10,15 +10,25 @@ data Item = Empty
           | BootsOfSpeed
           | BrawlersGloves
           | ChainVest
+          | CloakOfAgility
           | ClothArmor
           | Dagger
           | DoransBlade
           | DoransRing
           | DoransShield
           | FaerieCharm
+          | GiantsBelt
+          | LongSword
+          | MekiPendant
           | NeedlesslyLargeRod
+          | NegatronCloak
+          | NullMagicMantle
+          | Pickaxe
           | RecurveBow
           | RegrowthPendant
+          | RejuvenationBead
+          | RubyCrystal
+          | SapphireCrystal
           | VampiricScepter
     deriving (Enum, Eq, Ord, Show)
 
@@ -49,6 +59,7 @@ statsFor BootsOfSpeed = stats { price = 300, movementSpeed = 1 }
 statsFor BrawlersGloves = stats { price = 400, critChance = 8 }
 statsFor ChainVest = stats { price = 700, armor = 45 }
 statsFor ClothArmor = stats { price = 300, armor = 18 }
+statsFor CloakOfAgility = stats { price = 830, critChance = 18 }
 statsFor Dagger = stats { price = 420, aS = 15 }
 statsFor DoransBlade =
     stats { price = 475, health = 100, aD = 10, lifeSteal = 3 }
@@ -56,9 +67,18 @@ statsFor DoransRing = stats { price = 475, health = 100, mRegen = 7, aP = 15 }
 statsFor DoransShield =
     stats { price = 475, health = 120, hRegen = 120, armor = 10 }
 statsFor FaerieCharm = stats { price = 180, mRegen = 3 }
+statsFor GiantsBelt = stats { price = 1110, health = 430 }
+statsFor LongSword = stats { price = 410, aD = 10 }
+statsFor MekiPendant = stats { price = 390, mRegen = 7 }
 statsFor NeedlesslyLargeRod = stats { price = 1600, aP = 80 }
+statsFor NegatronCloak = stats { price = 740, mResist = 48 }
+statsFor NullMagicMantle = stats { price = 400, mResist = 24 }
+statsFor Pickaxe = stats { price = 975, aD = 25 }
 statsFor RecurveBow = stats { price = 1050, aS = 40 }
 statsFor RegrowthPendant = stats { price = 435, hRegen = 15 }
+statsFor RejuvenationBead = stats { price = 250, hRegen = 8 }
+statsFor RubyCrystal = stats { price = 475, health = 180 }
+statsFor SapphireCrystal = stats { price = 400, mana = 200 }
 statsFor VampiricScepter = stats { price = 450, lifeSteal = 12 }
 statsFor _ = stats
 
