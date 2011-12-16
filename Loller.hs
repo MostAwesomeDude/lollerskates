@@ -2,8 +2,11 @@ module Loller where
 
 data Item = Empty
           | AmplifyingTome
+          | BFSword
           | BlastingWand
           | BootsOfSpeed
+          | BrawlersGloves
+          | ChainVest
           | DoransRing
           | NeedlesslyLargeRod
           | RegrowthPendant
@@ -15,16 +18,23 @@ data Stats = Stats { price :: Int
                    , mana :: Int
                    , mRegen :: Int
                    , aD :: Int
-                   , aP :: Int }
+                   , aP :: Int
+                   , armor :: Int
+                   , mResist :: Int
+                   , critChance :: Int
+                   , movementSpeed :: Int }
     deriving (Show)
 
 stats :: Stats
-stats = Stats 0 0 0 0 0 0 0
+stats = Stats 0 0 0 0 0 0 0 0 0 0 0
 
 statsFor :: Item -> Stats
 statsFor AmplifyingTome = stats { price = 435, aP = 20 }
+statsFor BFSword = stats { price = 1650, aD = 45 }
 statsFor BlastingWand = stats { price = 860, aP = 40 }
-statsFor BootsOfSpeed = stats { price = 300 }
+statsFor BootsOfSpeed = stats { price = 300, movementSpeed = 1 }
+statsFor BrawlersGloves = stats { price = 400, critChance = 8 }
+statsFor ChainVest = stats { price = 700, armor = 45 }
 statsFor DoransRing = stats { price = 475, health = 100, mRegen = 7, aP = 15 }
 statsFor NeedlesslyLargeRod = stats { price = 1600, aP = 80 }
 statsFor RegrowthPendant = stats { price = 435, hRegen = 15 }
@@ -39,7 +49,11 @@ addStats first second = let
     mr = mRegen first + mRegen second
     ad = aD first + aD second
     ap = aP first + aP second
-    in Stats p h hr m mr ad ap
+    a = armor first + armor second
+    cc = critChance first + critChance second
+    mres = mResist first + mResist second
+    ms = max (movementSpeed first) (movementSpeed second)
+    in Stats p h hr m mr ad ap a cc mres ms
 
 withGuard :: ([Item] -> Bool) -> [Item] -> [Item]
 withGuard f is = if f is then is else []
