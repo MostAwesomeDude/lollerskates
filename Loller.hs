@@ -15,6 +15,7 @@ data Item = Empty
           | DoransBlade
           | DoransRing
           | DoransShield
+          | FaerieCharm
           | NeedlesslyLargeRod
           | RecurveBow
           | RegrowthPendant
@@ -54,6 +55,7 @@ statsFor DoransBlade =
 statsFor DoransRing = stats { price = 475, health = 100, mRegen = 7, aP = 15 }
 statsFor DoransShield =
     stats { price = 475, health = 120, hRegen = 120, armor = 10 }
+statsFor FaerieCharm = stats { price = 180, mRegen = 3 }
 statsFor NeedlesslyLargeRod = stats { price = 1600, aP = 80 }
 statsFor RecurveBow = stats { price = 1050, aS = 40 }
 statsFor RegrowthPendant = stats { price = 435, hRegen = 15 }
