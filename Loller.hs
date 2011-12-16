@@ -7,6 +7,8 @@ data Item = Empty
           | BootsOfSpeed
           | BrawlersGloves
           | ChainVest
+          | ClothArmor
+          | Dagger
           | DoransRing
           | NeedlesslyLargeRod
           | RegrowthPendant
@@ -21,12 +23,13 @@ data Stats = Stats { price :: Int
                    , aP :: Int
                    , armor :: Int
                    , mResist :: Int
+                   , aS :: Float
                    , critChance :: Int
                    , movementSpeed :: Int }
     deriving (Show)
 
 stats :: Stats
-stats = Stats 0 0 0 0 0 0 0 0 0 0 0
+stats = Stats 0 0 0 0 0 0 0 0 0 1.0 0 0
 
 statsFor :: Item -> Stats
 statsFor AmplifyingTome = stats { price = 435, aP = 20 }
@@ -35,6 +38,8 @@ statsFor BlastingWand = stats { price = 860, aP = 40 }
 statsFor BootsOfSpeed = stats { price = 300, movementSpeed = 1 }
 statsFor BrawlersGloves = stats { price = 400, critChance = 8 }
 statsFor ChainVest = stats { price = 700, armor = 45 }
+statsFor ClothArmor = stats { price = 300, armor = 18 }
+statsFor Dagger = stats { price = 420, aS = 1.15 }
 statsFor DoransRing = stats { price = 475, health = 100, mRegen = 7, aP = 15 }
 statsFor NeedlesslyLargeRod = stats { price = 1600, aP = 80 }
 statsFor RegrowthPendant = stats { price = 435, hRegen = 15 }
@@ -50,10 +55,11 @@ addStats first second = let
     ad = aD first + aD second
     ap = aP first + aP second
     a = armor first + armor second
-    cc = critChance first + critChance second
     mres = mResist first + mResist second
+    as = aS first * aS second
+    cc = critChance first + critChance second
     ms = max (movementSpeed first) (movementSpeed second)
-    in Stats p h hr m mr ad ap a cc mres ms
+    in Stats p h hr m mr ad ap a mres as cc ms
 
 withGuard :: ([Item] -> Bool) -> [Item] -> [Item]
 withGuard f is = if f is then is else []
