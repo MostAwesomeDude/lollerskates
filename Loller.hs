@@ -3,6 +3,8 @@ module Loller where
 import Data.List
 import Data.Ord
 
+import FD
+
 data Item = Empty
           | AmplifyingTome
           | BFSword
@@ -100,50 +102,17 @@ addStats first second = let
     ms = max (movementSpeed first) (movementSpeed second)
     in Stats p h hr m mr ad ap a mres steal vamp as cc ms
 
-withGuard :: ([Item] -> Bool) -> [Item] -> [Item]
-withGuard f is = if f is then is else []
+builds :: FD s [FDVar s]
+builds = do
+    build <- newVars 6 [Empty ..]
+    orderedIn build
+    return build
 
-twoEmptySlots :: [[Item]]
-twoEmptySlots = do
-    one <- [succ Empty ..]
-    two <- [one ..]
-    three <- [two ..]
-    four <- [three ..]
-    return [Empty, Empty, one, two, three, four]
+withEmptySlot :: [FDVar s] -> FD s ()
+withEmptySlot build = head build `hasValue` Empty
 
-oneEmptySlot :: [[Item]]
-oneEmptySlot = do
-    one <- [succ Empty ..]
-    two <- [one ..]
-    three <- [two ..]
-    four <- [three ..]
-    five <- [four ..]
-    return [Empty, one, two, three, four, five]
-
-fullBuild :: [[Item]]
-fullBuild = do
-    one <- [succ Empty ..]
-    two <- [one ..]
-    three <- [two ..]
-    four <- [three ..]
-    five <- [four ..]
-    six <- [five ..]
-    return [one, two, three, four, five, six]
-
-isBoots :: Item -> Bool
-isBoots i = i `elem` [BootsOfSpeed]
-
-hasBoots :: [Item] -> Bool
-hasBoots = any isBoots
-
-withBoots :: [Item] -> [Item]
-withBoots = withGuard hasBoots
-
-isVaried :: [Item] -> Bool
-isVaried is = length (nub is) == 6
-
-withVaried :: [Item] -> [Item]
-withVaried = withGuard isVaried
+withVariety :: [FDVar s] -> FD s ()
+withVariety build = orderedEx build
 
 -- | Sum up the stats for a build.
 buildStats :: [Item] -> Stats
