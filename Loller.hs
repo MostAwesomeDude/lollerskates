@@ -12,10 +12,13 @@ data Item = Empty
           | ChainVest
           | ClothArmor
           | Dagger
+          | DoransBlade
           | DoransRing
+          | DoransShield
           | NeedlesslyLargeRod
           | RecurveBow
           | RegrowthPendant
+          | VampiricScepter
     deriving (Enum, Eq, Ord, Show)
 
 data Stats = Stats { price :: Int
@@ -27,13 +30,15 @@ data Stats = Stats { price :: Int
                    , aP :: Int
                    , armor :: Int
                    , mResist :: Int
-                   , aS :: Float
+                   , lifeSteal :: Int
+                   , spellVamp :: Int
+                   , aS :: Int
                    , critChance :: Int
                    , movementSpeed :: Int }
     deriving (Show)
 
 stats :: Stats
-stats = Stats 0 0 0 0 0 0 0 0 0 1.0 0 0
+stats = Stats 0 0 0 0 0 0 0 0 0 0 0 0 0 0
 
 statsFor :: Item -> Stats
 statsFor AmplifyingTome = stats { price = 435, aP = 20 }
@@ -43,11 +48,16 @@ statsFor BootsOfSpeed = stats { price = 300, movementSpeed = 1 }
 statsFor BrawlersGloves = stats { price = 400, critChance = 8 }
 statsFor ChainVest = stats { price = 700, armor = 45 }
 statsFor ClothArmor = stats { price = 300, armor = 18 }
-statsFor Dagger = stats { price = 420, aS = 1.15 }
+statsFor Dagger = stats { price = 420, aS = 15 }
+statsFor DoransBlade =
+    stats { price = 475, health = 100, aD = 10, lifeSteal = 3 }
 statsFor DoransRing = stats { price = 475, health = 100, mRegen = 7, aP = 15 }
+statsFor DoransShield =
+    stats { price = 475, health = 120, hRegen = 120, armor = 10 }
 statsFor NeedlesslyLargeRod = stats { price = 1600, aP = 80 }
-statsFor RecurveBow = stats { price = 1050, aS = 1.4 }
+statsFor RecurveBow = stats { price = 1050, aS = 40 }
 statsFor RegrowthPendant = stats { price = 435, hRegen = 15 }
+statsFor VampiricScepter = stats { price = 450, lifeSteal = 12 }
 statsFor _ = stats
 
 addStats :: Stats -> Stats -> Stats
@@ -61,10 +71,12 @@ addStats first second = let
     ap = aP first + aP second
     a = armor first + armor second
     mres = mResist first + mResist second
-    as = aS first * aS second
+    steal = lifeSteal first + lifeSteal second
+    vamp = spellVamp first + spellVamp second
+    as = aS first + aS second
     cc = critChance first + critChance second
     ms = max (movementSpeed first) (movementSpeed second)
-    in Stats p h hr m mr ad ap a mres as cc ms
+    in Stats p h hr m mr ad ap a mres steal vamp as cc ms
 
 withGuard :: ([Item] -> Bool) -> [Item] -> [Item]
 withGuard f is = if f is then is else []
@@ -112,4 +124,4 @@ buildStats = foldr (addStats . statsFor) stats
 
 -- | Find the maximum build in a given attribute.
 maxBuild :: Ord a => (Stats -> a) -> [[Item]] -> [Item]
-maxBuild attr is = maximumBy (comparing $ attr . buildStats) is
+maxBuild attr = maximumBy (comparing $ attr . buildStats)
