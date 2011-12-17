@@ -2,6 +2,7 @@ module Main where
 
 import Control.Monad
 import Control.Monad.ST
+import Data.Char
 import Data.List
 import Data.Maybe
 import qualified Data.Map as Map
@@ -43,7 +44,7 @@ pad len padding l = take len $ l ++ replicate len padding
 
 lookupAttribute :: Monad m => String -> m (Stats -> Int)
 lookupAttribute attr = do
-    case Map.lookup attr attributeFilters of
+    case Map.lookup (map toLower attr) attributeFilters of
         Just f -> return f
         Nothing -> fail $ "Couldn't match attribute " ++ attr
 

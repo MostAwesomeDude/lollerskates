@@ -54,8 +54,20 @@ data Stats = Stats { price :: Int
     deriving (Show)
 
 attributeFilters :: Map.Map String (Stats -> Int)
-attributeFilters = Map.fromList [ ("price", price)
-                                , ("health", health) ]
+attributeFilters = Map.fromList [ ("abilitypower", abilityPower)
+                                , ("armor", armor)
+                                , ("attackdamage", attackDamage)
+                                , ("attackspeed", attackSpeed)
+                                , ("criticalchance", criticalChance)
+                                , ("health", health)
+                                , ("healthregen", healthRegen)
+                                , ("lifesteal", lifeSteal)
+                                , ("magicresist", magicResist)
+                                , ("mana", mana)
+                                , ("manaregen", manaRegen)
+                                , ("movementspeed", movementSpeed)
+                                , ("price", price)
+                                , ("spellvamp", spellVamp) ]
 
 stats :: Stats
 stats = Stats 0 0 0 0 0 0 0 0 0 0 0 0 0 0
