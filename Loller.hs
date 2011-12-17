@@ -7,32 +7,105 @@ import Data.Ord
 import FD
 
 data Item = Empty
+          | AbyssalScepter
+          | AegisOfTheLegion
           | AmplifyingTome
+          | ArchangelsStaff
+          | AtmasImpaler
+          | AvariceBlade
           | BFSword
+          | BerserkersGreaves
+          | BilgewaterCutlass
           | BlastingWand
+          | BootsOfMobility
           | BootsOfSpeed
+          | BootsOfSwiftness
           | BrawlersGloves
+          | CatalystTheProtector
           | ChainVest
+          | ChaliceOfHarmony
+          | CloakAndDagger
           | CloakOfAgility
           | ClothArmor
           | Dagger
+          | DeathfireGrasp
           | DoransBlade
           | DoransRing
           | DoransShield
+          | EleisasMiracle
+          | EmblemOfValor
+          | ExecutionersCalling
           | FaerieCharm
+          | FiendishCodex
+          | ForceOfNature
+          | FrozenHeart
+          | FrozenMallet
           | GiantsBelt
+          | GlacialShroud
+          | GuardianAngel
+          | GuinsoosRageblade
+          | HauntingGuise
+          | HeartOfGold
+          | Hexdrinker
+          | HextechGunblade
+          | HextechRevolver
+          | InfinityEdge
+          | IonianBootsOfLucidity
+          | KagesLuckyPick
+          | Kindlegem
+          | LastWhisper
+          | LichBane
           | LongSword
+          | Malady
+          | ManaManipulator
+          | Manamune
           | MekiPendant
+          | MercurysTreads
+          | MoonflairSpellblade
+          | MorellosEvilTome
+          | NashorsTooth
           | NeedlesslyLargeRod
           | NegatronCloak
+          | NinjaTabi
           | NullMagicMantle
+          | Phage
+          | PhantomDancer
+          | PhilosophersStone
           | Pickaxe
+          | QuicksilverSash
+          | RabadonsDeathcap
+          | RanduinsOmen
           | RecurveBow
           | RegrowthPendant
           | RejuvenationBead
+          | RodOfAges
           | RubyCrystal
+          | RylaisCrystalScepter
           | SapphireCrystal
+          | Sheen
+          | ShurelyasReverie
+          | SorcerorsShoes
+          | SoulShroud
+          | SpiritVisage
+          | StarksFervor
+          | Stinger
+          | SunfireCape
+          | SwordOfTheDivine
+          | SwordOfTheOccult
+          | TearOftheGoddess
+          | TheBlackCleaver
+          | TheBrutalizer
+          | Thornmail
+          | Tiamat
+          | TrinityForce
           | VampiricScepter
+          | VoidStaff
+          | WardensMail
+          | WillOfTheAncients
+          | WitsEnd
+          | YoumuusGhostblade
+          | Zeal
+          | ZhonyasHourglass
     deriving (Enum, Eq, Ord, Read, Show)
 
 type Build = [Item]
