@@ -123,7 +123,7 @@ addStats first second = let
     in Stats p h hr m mr ad ap a mres steal vamp as cc ms
 
 builds :: [[Item]] -> FD s [FDVar s]
-builds items = mapM newVar items
+builds = mapM newVar
 
 -- | A default build constraint: Any item, in any slot, but ordered such that
 --   iteration should not yield very many repeated combinations.
@@ -137,7 +137,7 @@ withEmptySlot :: [FDVar s] -> FD s ()
 withEmptySlot build = head build `hasValue` Empty
 
 withVariety :: [FDVar s] -> FD s ()
-withVariety build = orderedEx build
+withVariety = orderedEx
 
 -- | Sum up the stats for a build.
 buildStats :: Build -> Stats

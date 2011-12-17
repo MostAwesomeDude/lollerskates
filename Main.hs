@@ -40,19 +40,17 @@ pad :: Int -> a -> [a] -> [a]
 pad len padding l = take len $ l ++ replicate len padding
 
 lookupAttribute :: Monad m => String -> m (Stats -> Int)
-lookupAttribute attr = do
-    case Map.lookup (map toLower attr) attributeFilters of
-        Just f -> return f
-        Nothing -> fail $ "Couldn't match attribute " ++ attr
+lookupAttribute attr = case Map.lookup (map toLower attr) attributeFilters of
+    Just f -> return f
+    Nothing -> fail $ "Couldn't match attribute " ++ attr
 
 lookupItem :: Monad m => String -> m [Item]
 lookupItem "*" = return [Empty ..]
-lookupItem name = do
-    case maybeRead name of
-        Just item -> return [item]
-        Nothing -> fail $ "Couldn't match item name " ++ name
+lookupItem name = case maybeRead name of
+    Just item -> return [item]
+    Nothing -> fail $ "Couldn't match item name " ++ name
 
-parseArguments :: Monad m => [String] -> m ((Stats -> Int), [[Item]])
+parseArguments :: Monad m => [String] -> m (Stats -> Int, [[Item]])
 parseArguments args = do
     when (null args) $ fail "No arguments given!"
     attribute <- lookupAttribute $ head args
@@ -73,5 +71,5 @@ main = do
     let build = buildForFlags flags sets
     when (null build) $ fail
         $ "No builds match the given constraints: " ++ show (tail params)
-    putStrLn $ show $ maxBuild attribute build
+    print $ maxBuild attribute build
     return ()
