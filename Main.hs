@@ -72,5 +72,7 @@ main = do
     (flags, params) <- parseArgv argv
     (attribute, sets) <- parseArguments params
     let build = buildForFlags flags sets
+    when (null build) $ fail
+        $ "No builds match the given constraints: " ++ show (tail params)
     putStrLn $ show $ maxBuild attribute build
     return ()

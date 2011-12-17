@@ -134,7 +134,7 @@ buildStats = foldr (addStats . statsFor) stats
 --   This variant uses foldl1' instead of foldl1, making it consume lists in
 --   constant space.
 maximumBy' :: (a -> a -> Ordering) -> [a] -> a
-maximumBy' _ [] = error "List.maximumBy: empty list"
+maximumBy' _ [] = error "Loller.maximumBy': empty list"
 maximumBy' cmp xs = foldl1' maxBy xs
     where
         maxBy x y = case cmp x y of
