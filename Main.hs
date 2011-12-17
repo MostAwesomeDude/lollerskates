@@ -8,6 +8,7 @@ import System.Console.GetOpt
 import System.Environment
 
 import FD
+import Items
 import Loller
 
 data Flag = Boots
