@@ -110,13 +110,15 @@ addStats first second = let
     in Stats p h hr m mr ad ap a mres steal vamp as cc ms
 
 builds :: [[Item]] -> FD s [FDVar s]
-builds items = do
-    build <- mapM newVar items
+builds items = mapM newVar items
+
+-- | A default build constraint: Any item, in any slot, but ordered such that
+--   iteration should not yield very many repeated combinations.
+defaultBuilds :: FD s [FDVar s]
+defaultBuilds = do
+    build <- builds $ replicate 6 [Empty ..]
     orderedIn build
     return build
-
-defaultBuilds :: FD s [FDVar s]
-defaultBuilds = builds $ replicate 6 [Empty ..]
 
 withEmptySlot :: [FDVar s] -> FD s ()
 withEmptySlot build = head build `hasValue` Empty
