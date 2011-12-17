@@ -118,6 +118,19 @@ withVariety build = orderedEx build
 buildStats :: [Item] -> Stats
 buildStats = foldr (addStats . statsFor) stats
 
+-- | The 'maximumBy' function takes a comparison function and a list
+--   and returns the greatest element of the list by the comparison function.
+--   The list must be finite and non-empty.
+--   This variant uses foldl1' instead of foldl1, making it consume lists in
+--   constant space.
+maximumBy' :: (a -> a -> Ordering) -> [a] -> a
+maximumBy' _ [] = error "List.maximumBy: empty list"
+maximumBy' cmp xs = foldl1' maxBy xs
+    where
+        maxBy x y = case cmp x y of
+                    GT -> x
+                    _ -> y
+
 -- | Find the maximum build in a given attribute.
 maxBuild :: Ord a => (Stats -> a) -> [[Item]] -> [Item]
-maxBuild attr = maximumBy (comparing $ attr . buildStats)
+maxBuild attr = maximumBy' (comparing $ attr . buildStats)
