@@ -1,12 +1,9 @@
 module Main where
 
 import Control.Monad
-import Control.Monad.ST
 import Data.Char
-import Data.List
 import Data.Maybe
 import qualified Data.Map as Map
-import Data.STRef
 import System.Console.GetOpt
 import System.Environment
 
@@ -68,6 +65,7 @@ buildForFlags flags items = runFD $ do
     when (Unique `elem` flags) $ withVariety build
     labelling build
 
+main :: IO ()
 main = do
     argv <- getArgs
     (flags, params) <- parseArgv argv

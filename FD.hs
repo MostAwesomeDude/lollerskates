@@ -23,7 +23,6 @@ module FD (
 
 import Prelude hiding (lookup)
 import Control.Monad.State.Lazy
-import Control.Monad.Trans
 import qualified Data.Map as Map
 import Data.Map ((!), Map)
 import qualified Data.IntSet as IntSet
@@ -64,12 +63,12 @@ newVar domain = do
             put $ s { varSupply = FDVar (unFDVar v + 1) }
             return v
         isOneOf :: (Enum a) => FDVar s -> [a] -> FD s ()
-        x `isOneOf` domain =
+        x `isOneOf` d =
             modify $ \s ->
                 let vm = varMap s
                     vi = VarInfo {
                         delayedConstraints = return (),
-                        values = IntSet.fromList $ map fromEnum domain}
+                        values = IntSet.fromList $ map fromEnum d}
                 in
                 s { varMap = Map.insert x vi vm }
 
