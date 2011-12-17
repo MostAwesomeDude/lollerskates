@@ -3,6 +3,7 @@ module Main where
 import Control.Monad
 import Control.Monad.ST
 import Data.List
+import Data.Maybe
 import Data.STRef
 import System.Console.GetOpt
 import System.Environment
@@ -31,6 +32,9 @@ parseArgv argv = case getOpt Permute options argv of
     (flags, params, []) -> return (flags, params)
     (_, _, errors) -> fail $ errMsg errors
 
+maybeRead :: Read a => String -> Maybe a
+maybeRead = fmap fst . listToMaybe . reads
+
 lookupAttribute :: Monad m => [String] -> m (Stats -> Int)
 lookupAttribute params = do
     when (null params) $ fail "No attributes given!"
@@ -39,7 +43,7 @@ lookupAttribute params = do
         "health" -> return health
         _ -> fail $ "Couldn't match attribute " ++ param
 
-buildForFlags :: [Flag] -> [[Item]]
+buildForFlags :: [Flag] -> [Build]
 buildForFlags flags = runFD $ do
     build <- builds
     when (Unique `elem` flags) $ withVariety build

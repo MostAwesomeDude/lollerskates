@@ -32,7 +32,9 @@ data Item = Empty
           | RubyCrystal
           | SapphireCrystal
           | VampiricScepter
-    deriving (Enum, Eq, Ord, Show)
+    deriving (Enum, Eq, Ord, Read, Show)
+
+type Build = [Item]
 
 data Stats = Stats { price :: Int
                    , health :: Int
@@ -115,7 +117,7 @@ withVariety :: [FDVar s] -> FD s ()
 withVariety build = orderedEx build
 
 -- | Sum up the stats for a build.
-buildStats :: [Item] -> Stats
+buildStats :: Build -> Stats
 buildStats = foldr (addStats . statsFor) stats
 
 -- | The 'maximumBy' function takes a comparison function and a list
@@ -132,5 +134,5 @@ maximumBy' cmp xs = foldl1' maxBy xs
                     _ -> y
 
 -- | Find the maximum build in a given attribute.
-maxBuild :: Ord a => (Stats -> a) -> [[Item]] -> [Item]
+maxBuild :: Ord a => (Stats -> a) -> [Build] -> Build
 maxBuild attr = maximumBy' (comparing $ attr . buildStats)
