@@ -22,7 +22,7 @@ options =
     ]
 
 errHeader :: String
-errHeader = "Usage: loller [OPTIONS] ATTRIBUTE ITEMS"
+errHeader = "Usage: loller [OPTIONS] MODE ATTRIBUTE ..."
 
 errMsg :: [String] -> String
 errMsg errors = "\n" ++ concat errors ++ usageInfo errHeader options

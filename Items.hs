@@ -123,6 +123,7 @@ stats = Stats 0 0 0 0 0 0 0 0 0 0 0 0 0 0
 
 statsFor :: Item -> Stats
 statsFor AmplifyingTome = stats { price = 435, abilityPower = 20 }
+statsFor AvariceBlade = stats { price = 750, criticalChance = 12 }
 statsFor BFSword = stats { price = 1650, attackDamage = 45 }
 statsFor BlastingWand = stats { price = 860, abilityPower = 40 }
 statsFor BootsOfSpeed = stats { price = 300, movementSpeed = 1 }
@@ -139,18 +140,23 @@ statsFor DoransShield =
     stats { price = 475, health = 120, healthRegen = 120, armor = 10 }
 statsFor FaerieCharm = stats { price = 180, manaRegen = 3 }
 statsFor GiantsBelt = stats { price = 1110, health = 430 }
+statsFor HeartOfGold = stats { price = 825, health = 250 }
+statsFor KagesLuckyPick = stats { price = 765, abilityPower = 25 }
 statsFor LongSword = stats { price = 410, attackDamage = 10 }
 statsFor MekiPendant = stats { price = 390, manaRegen = 7 }
 statsFor NeedlesslyLargeRod = stats { price = 1600, abilityPower = 80 }
 statsFor NegatronCloak = stats { price = 740, magicResist = 48 }
 statsFor NullMagicMantle = stats { price = 400, magicResist = 24 }
 statsFor Pickaxe = stats { price = 975, attackDamage = 25 }
+statsFor RanduinsOmen =
+    stats { price = 3075, health = 350, armor = 75, healthRegen = 25 }
 statsFor RecurveBow = stats { price = 1050, attackSpeed = 40 }
 statsFor RegrowthPendant = stats { price = 435, healthRegen = 15 }
 statsFor RejuvenationBead = stats { price = 250, healthRegen = 8 }
 statsFor RubyCrystal = stats { price = 475, health = 180 }
 statsFor SapphireCrystal = stats { price = 400, mana = 200 }
 statsFor VampiricScepter = stats { price = 450, lifeSteal = 12 }
+statsFor WardensMail = stats { price = 1350, armor = 50, healthRegen = 20 }
 statsFor _ = stats
 
 addStats :: Stats -> Stats -> Stats

@@ -59,6 +59,10 @@ maximumBy' cmp xs = foldl1' maxBy xs
                     GT -> x
                     _ -> y
 
+-- | Find the best item in a given attribute.
+bestItem :: Ord a => (Stats -> a) -> [Item] -> Item
+bestItem attr = maximumBy' (comparing $ attr . statsFor)
+
 -- | Find the maximum build in a given attribute.
 maxBuild :: Ord a => (Stats -> a) -> [Build] -> Build
 maxBuild attr = maximumBy' (comparing $ attr . buildStats)
