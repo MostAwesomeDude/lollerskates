@@ -4,6 +4,7 @@ import Control.Monad
 import Control.Monad.ST
 import Data.List
 import Data.Maybe
+import qualified Data.Map as Map
 import Data.STRef
 import System.Console.GetOpt
 import System.Environment
@@ -22,7 +23,7 @@ options =
     ]
 
 errHeader :: String
-errHeader = "Usage: loller [OPTIONS] ATTRIBUTE"
+errHeader = "Usage: loller [OPTIONS] ATTRIBUTE ITEMS"
 
 errMsg :: [String] -> String
 errMsg errors = "\n" ++ concat errors ++ usageInfo errHeader options
@@ -35,24 +36,41 @@ parseArgv argv = case getOpt Permute options argv of
 maybeRead :: Read a => String -> Maybe a
 maybeRead = fmap fst . listToMaybe . reads
 
-lookupAttribute :: Monad m => [String] -> m (Stats -> Int)
-lookupAttribute params = do
-    when (null params) $ fail "No attributes given!"
-    let param = head params
-    case param of
-        "health" -> return health
-        _ -> fail $ "Couldn't match attribute " ++ param
+-- | Given a padding and a list, pad (or truncate!) the list to a certain
+--   length.
+pad :: Int -> a -> [a] -> [a]
+pad len padding l = take len $ l ++ replicate len padding
 
-buildForFlags :: [Flag] -> [Build]
-buildForFlags flags = runFD $ do
-    build <- builds
+lookupAttribute :: Monad m => String -> m (Stats -> Int)
+lookupAttribute attr = do
+    case Map.lookup attr attributeFilters of
+        Just f -> return f
+        Nothing -> fail $ "Couldn't match attribute " ++ attr
+
+lookupItem :: Monad m => String -> m [Item]
+lookupItem "*" = return [Empty ..]
+lookupItem name = do
+    case maybeRead name of
+        Just item -> return [item]
+        Nothing -> fail $ "Couldn't match item name " ++ name
+
+parseArguments :: Monad m => [String] -> m ((Stats -> Int), [[Item]])
+parseArguments args = do
+    when (null args) $ fail "No arguments given!"
+    attribute <- lookupAttribute $ head args
+    items <- mapM lookupItem $ pad 6 "*" (tail args)
+    return (attribute, items)
+
+buildForFlags :: [Flag] -> [[Item]] -> [Build]
+buildForFlags flags items = runFD $ do
+    build <- builds items
     when (Unique `elem` flags) $ withVariety build
     labelling build
 
 main = do
     argv <- getArgs
     (flags, params) <- parseArgv argv
-    attribute <- lookupAttribute params
-    let build = buildForFlags flags
+    (attribute, sets) <- parseArguments params
+    let build = buildForFlags flags sets
     putStrLn $ show $ maxBuild attribute build
     return ()
