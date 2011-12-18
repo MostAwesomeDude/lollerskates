@@ -16,16 +16,17 @@ data Flag = Boots
           | Unique
     deriving (Eq, Show)
 
-data ModeParameters = BuildMode { attribute :: String, parameters :: [String] }
-                    | ItemMode { attribute :: String }
+data ModeParameters = BuildMode { bmAttribute :: String
+                                , bmParameters :: [String] }
+                    | ItemMode { imAttribute :: String }
     deriving (Data, Show, Typeable)
 
 arguments :: Mode (CmdArgs ModeParameters)
 arguments = cmdArgsMode $
-    modes [ BuildMode { attribute = def &= argPos 0 &= typ "ATTRIBUTE"
-                      , parameters = def &= args &= typ "ITEMS" }
+    modes [ BuildMode { bmAttribute = def &= argPos 0 &= typ "ATTRIBUTE"
+                      , bmParameters = def &= args &= typ "ITEMS" }
                       &= name "build"
-          , ItemMode { attribute = def &= argPos 0 &= typ "ATTRIBUTE" }
+          , ItemMode { imAttribute = def &= argPos 0 &= typ "ATTRIBUTE" }
                      &= name "item" ]
     &= summary "Lollerskates"
 
@@ -74,5 +75,7 @@ doMode (BuildMode attr params) = do
     when (null build) $ fail
         $ "No builds match the given constraints: " ++ show (tail params)
     print $ maxBuild attribute build
-    return ()
-doMode _ = fail $ "Not implemented yet! :c"
+doMode (ItemMode attr) = do
+    attribute <- lookupAttribute attr
+    print $ bestItem attribute [Empty ..]
+doMode _ = fail $ "Unknown mode. You probably shouldn't be able to reach this."
