@@ -10,6 +10,16 @@ import Items
 type Build = [Item]
 type Comparator = Stats -> Float
 
+-- | Turn any accessor into a comparator which considers per-gold worth of an
+--   item, by turning any field into field-per-gold.
+--   This was the stupid ((/) `on` realToFrac) (f stats) (price stats) before,
+--   but now it's tuned to catch division-by-zero NaNs.
+worth :: (Stats -> Int) -> Stats -> Float
+worth f stats =
+    let p = price stats in case p of
+        0 -> 0
+        _ -> realToFrac (f stats) / realToFrac p
+
 attributeFilters :: Map.Map String Comparator
 attributeFilters = Map.fromList [ ("abilitypower", toEnum . abilityPower)
                                 , ("armor", toEnum . armor)
@@ -24,7 +34,23 @@ attributeFilters = Map.fromList [ ("abilitypower", toEnum . abilityPower)
                                 , ("manaregen", toEnum . manaRegen)
                                 , ("movementspeed", toEnum . movementSpeed)
                                 , ("price", toEnum . price)
-                                , ("spellvamp", toEnum . spellVamp) ]
+                                , ("spellvamp", toEnum . spellVamp)
+                                -- Economic variants: The most bang for your
+                                -- buck.
+                                -- ]
+                                , ("eabilitypower", worth abilityPower)
+                                , ("earmor", worth armor)
+                                , ("eattackdamage", worth attackDamage)
+                                , ("eattackspeed", worth attackSpeed)
+                                , ("ecriticalchance", worth criticalChance)
+                                , ("ehealth", worth health)
+                                , ("ehealthregen", worth healthRegen)
+                                , ("elifesteal", worth lifeSteal)
+                                , ("emagicresist", worth magicResist)
+                                , ("emana", worth mana)
+                                , ("emanaregen", worth manaRegen)
+                                , ("emovementspeed", worth movementSpeed)
+                                , ("espellvamp", worth spellVamp) ]
 
 builds :: [[Item]] -> FD s [FDVar s]
 builds = mapM newVar
