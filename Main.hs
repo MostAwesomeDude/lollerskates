@@ -1,11 +1,12 @@
+{-# LANGUAGE DeriveDataTypeable #-}
+
 module Main where
 
 import Control.Monad
 import Data.Char
 import Data.Maybe
 import qualified Data.Map as Map
-import System.Console.GetOpt
-import System.Environment
+import System.Console.CmdArgs
 
 import FD
 import Items
@@ -15,22 +16,18 @@ data Flag = Boots
           | Unique
     deriving (Eq, Show)
 
-options :: [OptDescr Flag]
-options =
-    [ Option "b" ["boots"] (NoArg Boots) "Require boots"
-    , Option "u" ["unique"] (NoArg Unique) "Require unique builds"
-    ]
+data ModeParameters = BuildMode { attribute :: String, parameters :: [String] }
+                    | ItemMode { attribute :: String }
+    deriving (Data, Show, Typeable)
 
-errHeader :: String
-errHeader = "Usage: loller [OPTIONS] MODE ATTRIBUTE ..."
-
-errMsg :: [String] -> String
-errMsg errors = "\n" ++ concat errors ++ usageInfo errHeader options
-
-parseArgv :: [String] -> IO ([Flag], [String])
-parseArgv argv = case getOpt Permute options argv of
-    (flags, params, []) -> return (flags, params)
-    (_, _, errors) -> fail $ errMsg errors
+arguments :: Mode (CmdArgs ModeParameters)
+arguments = cmdArgsMode $
+    modes [ BuildMode { attribute = def &= argPos 0 &= typ "ATTRIBUTE"
+                      , parameters = def &= args &= typ "ITEMS" }
+                      &= name "build"
+          , ItemMode { attribute = def &= argPos 0 &= typ "ATTRIBUTE" }
+                     &= name "item" ]
+    &= summary "Lollerskates"
 
 maybeRead :: Read a => String -> Maybe a
 maybeRead = fmap fst . listToMaybe . reads
@@ -66,11 +63,16 @@ buildForFlags flags items = runFD $ do
 
 main :: IO ()
 main = do
-    argv <- getArgs
-    (flags, params) <- parseArgv argv
-    (attribute, sets) <- parseArguments params
-    let build = buildForFlags flags sets
+    args <- cmdArgsRun arguments
+    doMode args
+
+doMode :: ModeParameters -> IO ()
+doMode (BuildMode attr params) = do
+    attribute <- lookupAttribute attr
+    sets <- mapM lookupItem $ pad 6 "*" params
+    let build = buildForFlags [] sets
     when (null build) $ fail
         $ "No builds match the given constraints: " ++ show (tail params)
     print $ maxBuild attribute build
     return ()
+doMode _ = fail $ "Not implemented yet! :c"
