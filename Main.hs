@@ -38,7 +38,7 @@ maybeRead = fmap fst . listToMaybe . reads
 pad :: Int -> a -> [a] -> [a]
 pad len padding l = take len $ l ++ replicate len padding
 
-lookupAttribute :: Monad m => String -> m (Stats -> Int)
+lookupAttribute :: Monad m => String -> m Comparator
 lookupAttribute attr = case Map.lookup (map toLower attr) attributeFilters of
     Just f -> return f
     Nothing -> fail $ "Couldn't match attribute " ++ attr
@@ -49,7 +49,7 @@ lookupItem name = case maybeRead name of
     Just item -> return [item]
     Nothing -> fail $ "Couldn't match item name " ++ name
 
-parseArguments :: Monad m => [String] -> m (Stats -> Int, [[Item]])
+parseArguments :: Monad m => [String] -> m (Comparator, [[Item]])
 parseArguments args = do
     when (null args) $ fail "No arguments given!"
     attribute <- lookupAttribute $ head args

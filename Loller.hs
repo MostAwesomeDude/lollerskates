@@ -7,23 +7,24 @@ import Data.Ord
 import FD
 import Items
 
-attributeFilters :: Map.Map String (Stats -> Int)
-attributeFilters = Map.fromList [ ("abilitypower", abilityPower)
-                                , ("armor", armor)
-                                , ("attackdamage", attackDamage)
-                                , ("attackspeed", attackSpeed)
-                                , ("criticalchance", criticalChance)
-                                , ("health", health)
-                                , ("healthregen", healthRegen)
-                                , ("lifesteal", lifeSteal)
-                                , ("magicresist", magicResist)
-                                , ("mana", mana)
-                                , ("manaregen", manaRegen)
-                                , ("movementspeed", movementSpeed)
-                                , ("price", price)
-                                , ("spellvamp", spellVamp) ]
-
 type Build = [Item]
+type Comparator = Stats -> Float
+
+attributeFilters :: Map.Map String Comparator
+attributeFilters = Map.fromList [ ("abilitypower", toEnum . abilityPower)
+                                , ("armor", toEnum . armor)
+                                , ("attackdamage", toEnum . attackDamage)
+                                , ("attackspeed", toEnum . attackSpeed)
+                                , ("criticalchance", toEnum . criticalChance)
+                                , ("health", toEnum . health)
+                                , ("healthregen", toEnum . healthRegen)
+                                , ("lifesteal", toEnum . lifeSteal)
+                                , ("magicresist", toEnum . magicResist)
+                                , ("mana", toEnum . mana)
+                                , ("manaregen", toEnum . manaRegen)
+                                , ("movementspeed", toEnum . movementSpeed)
+                                , ("price", toEnum . price)
+                                , ("spellvamp", toEnum . spellVamp) ]
 
 builds :: [[Item]] -> FD s [FDVar s]
 builds = mapM newVar
