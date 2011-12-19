@@ -12,18 +12,20 @@ import FD
 import Items
 import Loller
 
-data Flag = Boots
-          | Unique
+data Flag = Unique
     deriving (Eq, Show)
 
-data ModeParameters = BuildMode { bmAttribute :: String
+data ModeParameters = BuildMode { bmUnique :: Bool
+                                , bmAttribute :: String
                                 , bmParameters :: [String] }
                     | ItemMode { imAttribute :: String }
     deriving (Data, Show, Typeable)
 
 arguments :: Mode (CmdArgs ModeParameters)
 arguments = cmdArgsMode $
-    modes [ BuildMode { bmAttribute = def &= argPos 0 &= typ "ATTRIBUTE"
+    modes [ BuildMode { bmUnique = False &= name "unique"
+                            &= help "Force wildcard items to be unique"
+                      , bmAttribute = def &= argPos 0 &= typ "ATTRIBUTE"
                       , bmParameters = def &= args &= typ "ITEMS" }
                       &= name "build"
           , ItemMode { imAttribute = def &= argPos 0 &= typ "ATTRIBUTE" }
@@ -68,12 +70,13 @@ main = do
     doMode args
 
 doMode :: ModeParameters -> IO ()
-doMode (BuildMode attr params) = do
+doMode (BuildMode isUnique attr params) = do
     attribute <- lookupAttribute attr
     sets <- mapM lookupItem $ pad 6 "*" params
-    let build = buildForFlags [] sets
+    let flags = if isUnique then [Unique] else []
+    let build = buildForFlags flags sets
     when (null build) $ fail
-        $ "No builds match the given constraints: " ++ show (tail params)
+        $ "No builds match the given constraints: " ++ show params
     print $ maxBuild attribute build
 doMode (ItemMode attr) = do
     attribute <- lookupAttribute attr

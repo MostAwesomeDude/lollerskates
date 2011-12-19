@@ -60,14 +60,15 @@ builds = mapM newVar
 defaultBuilds :: FD s [FDVar s]
 defaultBuilds = do
     build <- builds $ replicate 6 [Empty ..]
-    orderedIn build
+    -- orderedIn build
     return build
 
 withEmptySlot :: [FDVar s] -> FD s ()
 withEmptySlot build = head build `hasValue` Empty
 
 withVariety :: [FDVar s] -> FD s ()
-withVariety = orderedEx
+-- withVariety = orderedEx
+withVariety = allDifferent
 
 -- | Sum up the stats for a build.
 buildStats :: Build -> Stats
