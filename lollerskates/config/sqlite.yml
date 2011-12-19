@@ -1,0 +1,20 @@
+Default: &defaults
+  database: lollerskates.sqlite3
+  poolsize: 10
+
+Development:
+  <<: *defaults
+
+Testing:
+  database: lollerskates_test.sqlite3
+  <<: *defaults
+
+Staging:
+  database: lollerskates_staging.sqlite3
+  poolsize: 100
+  <<: *defaults
+
+Production:
+  database: lollerskates_production.sqlite3
+  poolsize: 100
+  <<: *defaults
