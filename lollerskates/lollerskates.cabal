@@ -30,6 +30,7 @@ library
                      Import
                      Settings
                      Settings.StaticFiles
+                     Handler.Bravery
                      Handler.Root
 
     ghc-options:   -Wall -threaded -O0
