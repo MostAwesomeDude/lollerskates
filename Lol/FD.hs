@@ -1,7 +1,7 @@
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE RankNTypes #-}
 
-module FD (
+module Lol.FD (
     -- Types
     FD,           -- Monad for finite domain constraint solver
     FDVar,        -- Finite domain solver variable

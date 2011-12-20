@@ -4,8 +4,9 @@ license:           BSD3
 license-file:      LICENSE
 author:            Corbin Simpson
 maintainer:        Corbin Simpson
-synopsis:          The greatest Yesod web application ever.
-description:       I'm sure you can say something clever here if you try.
+synopsis:          Yesod web application for League of Legends
+description:       A League of Legends assistant which provides handy analyses
+                   of in-game items.
 category:          Web
 stability:         Experimental
 cabal-version:     >= 1.6
@@ -32,6 +33,9 @@ library
                      Settings.StaticFiles
                      Handler.Bravery
                      Handler.Root
+                     Lol.FD
+                     Lol.Items
+                     Lol.Loller
 
     ghc-options:   -Wall -threaded -O0
 
@@ -65,15 +69,17 @@ executable         lollerskates
                 MultiParamTypeClasses
                 TypeFamilies
 
-    build-depends: base                          >= 4          && < 5
-                 , yesod-core                    >= 0.9.3      && < 0.10
-                 , yesod-static                  >= 0.3.1      && < 0.4
-                 , yesod-default                 >= 0.4        && < 0.5
-                 , clientsession                 >= 0.7.3      && < 0.8
-                 , bytestring                    >= 0.9        && < 0.10
-                 , text                          >= 0.11       && < 0.12
+    build-depends: base             >= 4     && < 5
+                 , yesod-core       >= 0.9.3 && < 0.10
+                 , yesod-static     >= 0.3.1 && < 0.4
+                 , yesod-default    >= 0.4   && < 0.5
+                 , clientsession    >= 0.7.3 && < 0.8
+                 , bytestring       >= 0.9   && < 0.10
+                 , text             >= 0.11  && < 0.12
                  , template-haskell
-                 , hamlet                        >= 0.10       && < 0.11
-                 , shakespeare-text              >= 0.10       && < 0.11
-                 , wai                           >= 0.4.2      && < 0.5
-                 , transformers                  >= 0.2        && < 0.3
+                 , hamlet           >= 0.10  && < 0.11
+                 , shakespeare-text >= 0.10  && < 0.11
+                 , wai              >= 0.4.2 && < 0.5
+                 , transformers     >= 0.2   && < 0.3
+                 , containers       >= 0.4   && < 0.5
+                 , mtl              >= 2.0.1 && < 2.1

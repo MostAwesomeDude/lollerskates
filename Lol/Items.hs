@@ -1,4 +1,7 @@
-module Items where
+module Lol.Items where
+
+-- Yesod hides our Prelude, so we need to explicitly ask for it.
+import Prelude
 
 data Item = Empty
           | AbyssalScepter

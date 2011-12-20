@@ -1,11 +1,14 @@
-module Loller where
+module Lol.Loller where
+
+-- Yesod hides the Prelude. We want it back.
+import Prelude
 
 import Data.List
 import qualified Data.Map as Map
 import Data.Ord
 
-import FD
-import Items
+import Lol.FD
+import Lol.Items
 
 type Build = [Item]
 type Comparator = Stats -> Float
