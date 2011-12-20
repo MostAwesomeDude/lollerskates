@@ -121,6 +121,25 @@ instance Random Item where
     -- random :: RandomGen g => g -> (Item, g)
     random gen = randomR (minBound, maxBound) gen
 
+-- Some item classes.
+
+-- | The different kinds of boots, all in one place.
+boots :: [Item]
+boots = [ BerserkersGreaves
+        , BootsOfMobility
+        , BootsOfSpeed
+        , BootsOfSwiftness
+        , IonianBootsOfLucidity
+        , MercurysTreads
+        , NinjaTabi
+        , SorcerorsShoes ]
+
+isBoots :: Item -> Bool
+isBoots = flip elem boots
+
+hasBoots :: [Item] -> Bool
+hasBoots = any isBoots
+
 data Stats = Stats { price :: Int
                    , health :: Int
                    , healthRegen :: Int
