@@ -1,7 +1,7 @@
 import Yesod.Default.Config (fromArgs)
 import Yesod.Default.Main   (defaultMain)
-import Application          (withLollerWeb)
+import Application          (withLollerSite)
 import Prelude              (IO)
 
 main :: IO ()
-main = defaultMain fromArgs withLollerWeb
+main = defaultMain fromArgs withLollerSite

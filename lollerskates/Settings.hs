@@ -2,10 +2,9 @@
 -- includes database connection settings, static file locations, etc.
 -- In addition, you can configure a number of different aspects of Yesod
 -- by overriding methods in the Yesod typeclass. That instance is
--- declared in the Foundation.hs file.
+-- declared in the lollerskates.hs file.
 module Settings
     ( widgetFile
-    , PersistConfig
     , staticRoot
     , staticDir
     ) where
@@ -13,15 +12,9 @@ module Settings
 import Prelude (FilePath, String)
 import Text.Shakespeare.Text (st)
 import Language.Haskell.TH.Syntax
-import Database.Persist.Sqlite (SqliteConf)
 import Yesod.Default.Config
 import qualified Yesod.Default.Util
 import Data.Text (Text)
-
--- | Which Persistent backend this site is using.
-type PersistConfig = SqliteConf
-
--- Static setting below. Changing these requires a recompile
 
 -- | The location of static files on your system. This is a file system
 -- path. The default value works properly with your scaffolded site.
@@ -37,16 +30,12 @@ staticDir = "static"
 -- please see:
 --   http://code.google.com/speed/page-speed/docs/request.html#ServeFromCookielessDomain
 --
--- If you change the resource pattern for StaticR in Foundation.hs, you will
+-- If you change the resource pattern for StaticR in lollerskates.hs, you will
 -- have to make a corresponding change here.
 --
--- To see how this value is used, see urlRenderOverride in Foundation.hs
+-- To see how this value is used, see urlRenderOverride in lollerskates.hs
 staticRoot :: AppConfig DefaultEnv ->  Text
 staticRoot conf = [st|#{appRoot conf}/static|]
-
-
--- The rest of this file contains settings which rarely need changing by a
--- user.
 
 widgetFile :: String -> Q Exp
 #if PRODUCTION
