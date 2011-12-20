@@ -1,9 +1,12 @@
 module Handler.Bravery where
 
 import Import
+import Yesod.Form
 
 import Lol.Bravery
 import Lol.Items
+
+data BraveryParams = BraveryParams { bpRequireBoots :: Bool }
 
 itemsWidget :: [Item] -> Widget
 itemsWidget is = [whamlet|
@@ -16,7 +19,7 @@ buildWidget is
     | not (null is) && isBoots (head is) = [whamlet|
 <ul>
     <li>Boots: #{show $ head is}
-    ^{itemsWidget is}
+    ^{itemsWidget $ tail is}
 |]
     | not (null is) = [whamlet|<ul>^{itemsWidget is}|]
     | otherwise = [whamlet|<p>Implementation error: buildWidget: empty list|]
@@ -27,9 +30,21 @@ braveryWidget b = [whamlet|
 ^{buildWidget $ bBuild b}
 |]
 
+braveryForm :: AForm LollerSite LollerSite BraveryParams
+braveryForm = BraveryParams
+    <$> areq boolField "Require boots?" (Just True)
+
+pickBraveryType :: Monad m => Bool -> m Widget
+pickBraveryType t =
+    let f = if t then makeBootsBravery else makeBravery
+    in return $ braveryWidget =<< liftIO f
+
 getBraveryR :: Handler RepHtml
 getBraveryR = do
+    ((results, form), enctype) <- runFormGet $ renderDivs braveryForm
     defaultLayout $ do
         setTitle "Lollerskates ~ Ultimate Bravery!"
-        bravery <- return $ braveryWidget =<< liftIO makeBravery
+        bravery <- case results of
+            FormSuccess bp -> pickBraveryType $ bpRequireBoots bp
+            _ -> pickBraveryType True
         $(widgetFile "bravery")

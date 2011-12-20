@@ -14,6 +14,7 @@ module Foundation
 
 import Prelude
 import Yesod.Core
+import Yesod.Form
 import Yesod.Default.Config
 import Yesod.Default.Util (addStaticContentExternal)
 import Yesod.Static (Static, base64md5, StaticRoute(..))
@@ -98,3 +99,6 @@ instance Yesod LollerSite where
 
     -- Enable Javascript async loading
     -- yepnopeJs _ = Just $ Right $ StaticR js_modernizr_js
+
+instance RenderMessage LollerSite FormMessage where
+    renderMessage _ _ = defaultFormMessage

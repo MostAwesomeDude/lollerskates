@@ -1,2 +1,5 @@
 <h1>Ultimate Bravery!
 ^{bravery}
+<form method=get action=@{BraveryR} enctype=#{enctype}>
+    ^{form}
+    <input type=submit>
