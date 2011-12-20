@@ -5,7 +5,22 @@ import Prelude
 
 import System.Random
 
+-- | The Item datatype.
+--   This type's constructors represent all of the different items available
+--   in Lollerskates. The list of constructors is carefully ordered to permit
+--   several useful optimizations related to enumeration; in particular,
+--   certain items like boots are clustered rather than alphabetical.
 data Item = Empty
+          -- Boots.
+          | BerserkersGreaves
+          | BootsOfMobility
+          | BootsOfSpeed
+          | BootsOfSwiftness
+          | IonianBootsOfLucidity
+          | MercurysTreads
+          | NinjaTabi
+          | SorcerorsShoes
+          -- General items.
           | AbyssalScepter
           | AegisOfTheLegion
           | AmplifyingTome
@@ -14,12 +29,8 @@ data Item = Empty
           | AvariceBlade
           | BFSword
           | BansheesVeil
-          | BerserkersGreaves
           | BilgewaterCutlass
           | BlastingWand
-          | BootsOfMobility
-          | BootsOfSpeed
-          | BootsOfSwiftness
           | BrawlersGloves
           | CatalystTheProtector
           | ChainVest
@@ -50,7 +61,6 @@ data Item = Empty
           | HextechGunblade
           | HextechRevolver
           | InfinityEdge
-          | IonianBootsOfLucidity
           | KagesLuckyPick
           | Kindlegem
           | LastWhisper
@@ -60,13 +70,11 @@ data Item = Empty
           | ManaManipulator
           | Manamune
           | MekiPendant
-          | MercurysTreads
           | MoonflairSpellblade
           | MorellosEvilTome
           | NashorsTooth
           | NeedlesslyLargeRod
           | NegatronCloak
-          | NinjaTabi
           | NullMagicMantle
           | Phage
           | PhantomDancer
@@ -84,7 +92,6 @@ data Item = Empty
           | SapphireCrystal
           | Sheen
           | ShurelyasReverie
-          | SorcerorsShoes
           | SoulShroud
           | SpiritVisage
           | StarksFervor
@@ -125,14 +132,7 @@ instance Random Item where
 
 -- | The different kinds of boots, all in one place.
 boots :: [Item]
-boots = [ BerserkersGreaves
-        , BootsOfMobility
-        , BootsOfSpeed
-        , BootsOfSwiftness
-        , IonianBootsOfLucidity
-        , MercurysTreads
-        , NinjaTabi
-        , SorcerorsShoes ]
+boots = [ BerserkersGreaves .. SorcerorsShoes ]
 
 isBoots :: Item -> Bool
 isBoots = flip elem boots
