@@ -9,9 +9,10 @@ import Lol.Items
 data BraveryParams = BraveryParams { bpRequireBoots :: Bool }
 
 itemsWidget :: [Item] -> Widget
-itemsWidget is = [whamlet|
-$forall i <- is
-    <li>#{show i}
+itemsWidget is = let zipped = zip [1 ..] is
+    in [whamlet|
+$forall (index, i) <- zipped
+    <li>Item #{show index}: #{show i}
 |]
 
 buildWidget :: [Item] -> Widget
