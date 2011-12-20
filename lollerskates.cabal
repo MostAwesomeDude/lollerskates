@@ -33,6 +33,7 @@ library
                      Settings.StaticFiles
                      Handler.Bravery
                      Handler.Root
+                     Lol.Bravery
                      Lol.FD
                      Lol.Items
                      Lol.Loller
@@ -80,6 +81,7 @@ executable         lollerskates
                  , hamlet           >= 0.10  && < 0.11
                  , shakespeare-text >= 0.10  && < 0.11
                  , wai              >= 0.4.2 && < 0.5
-                 , transformers     >= 0.2   && < 0.3
                  , containers       >= 0.4   && < 0.5
                  , mtl              >= 2.0.1 && < 2.1
+                 , random           >= 1.0   && < 1.1
+                 , transformers     >= 0.2   && < 0.3

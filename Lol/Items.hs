@@ -3,6 +3,8 @@ module Lol.Items where
 -- Yesod hides our Prelude, so we need to explicitly ask for it.
 import Prelude
 
+import System.Random
+
 data Item = Empty
           | AbyssalScepter
           | AegisOfTheLegion
@@ -104,7 +106,20 @@ data Item = Empty
           | YoumuusGhostblade
           | Zeal
           | ZhonyasHourglass
-    deriving (Enum, Eq, Ord, Read, Show)
+    deriving (Bounded, Enum, Eq, Ord, Read, Show)
+
+-- Since Random doesn't automatically happen on types which are Bounded and
+-- Enum, we go ahead and implement a straightforward and non-magical flavor of
+-- Random here.
+instance Random Item where
+    -- randomR :: RandomGen g => (Item, Item) -> g -> (Item, g)
+    randomR (first, second) gen =
+        let ifirst = fromEnum first :: Int
+            isecond = fromEnum second :: Int
+            repack (x, y) = (toEnum x, y)
+        in repack $ randomR (ifirst, isecond) gen
+    -- random :: RandomGen g => g -> (Item, g)
+    random gen = randomR (minBound, maxBound) gen
 
 data Stats = Stats { price :: Int
                    , health :: Int
@@ -214,3 +229,6 @@ addStats first second = let
     cc = criticalChance first + criticalChance second
     ms = max (movementSpeed first) (movementSpeed second)
     in Stats p h hr m mr ad ap a mres steal vamp as cc ms
+
+type Build = [Item]
+type Comparator = Stats -> Float

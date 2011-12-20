@@ -10,9 +10,6 @@ import Data.Ord
 import Lol.FD
 import Lol.Items
 
-type Build = [Item]
-type Comparator = Stats -> Float
-
 -- | Turn any accessor into a comparator which considers per-gold worth of an
 --   item, by turning any field into field-per-gold.
 --   This was the stupid ((/) `on` realToFrac) (f stats) (price stats) before,
