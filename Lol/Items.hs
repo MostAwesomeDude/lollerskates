@@ -126,7 +126,7 @@ instance Random Item where
             repack (x, y) = (toEnum x, y)
         in repack $ randomR (ifirst, isecond) gen
     -- random :: RandomGen g => g -> (Item, g)
-    random gen = randomR (minBound, maxBound) gen
+    random = randomR (minBound, maxBound)
 
 -- Some item classes.
 
