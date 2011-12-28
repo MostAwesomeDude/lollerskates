@@ -13,16 +13,16 @@ cabal-version:     >= 1.6
 build-type:        Simple
 homepage:          http://lollerskates.yesodweb.com/
 
-Flag production
-    Description:   Build the production executable.
+Flag dev
+    Description:   Turn on development settings, like auto-reload templates.
     Default:       False
 
-Flag devel
+Flag library-only
     Description:   Build for use with "yesod devel"
     Default:       False
 
 library
-    if flag(devel)
+    if flag(library-only)
         Buildable: True
     else
         Buildable: False
@@ -39,6 +39,7 @@ library
                      Lol.Loller
 
     ghc-options:   -Wall -threaded -O0
+    cpp-options:   -DDEVELOPMENT
 
     extensions: TemplateHaskell
                 QuasiQuotes
@@ -50,14 +51,14 @@ library
                 TypeFamilies
 
 executable         lollerskates
-    if flag(devel)
+    if flag(library-only)
         Buildable: False
 
-    if flag(production)
-        cpp-options:   -DPRODUCTION
-        ghc-options:   -Wall -threaded -O2
-    else
+    if flag(dev)
+        cpp-options:   -DDEVELOPMENT
         ghc-options:   -Wall -threaded -O0
+    else
+        ghc-options:   -Wall -threaded
 
     main-is:       main.hs
 
@@ -70,20 +71,21 @@ executable         lollerskates
                 MultiParamTypeClasses
                 TypeFamilies
 
-    build-depends: base             >= 4     && < 5
-                 , yesod-core       >= 0.9.3 && < 0.10
-                 , yesod-static     >= 0.3.1 && < 0.4
-                 , yesod-default    >= 0.4   && < 0.5
-                 , yesod-form       >= 0.3.4 && < 0.4
-                 , clientsession    >= 0.7.3 && < 0.8
-                 , bytestring       >= 0.9   && < 0.10
-                 , text             >= 0.11  && < 0.12
+    build-depends: base                          >= 4          && < 5
+                 , yesod-core                    >= 0.9.3      && < 0.10
+                 , yesod-static                  >= 0.3.1      && < 0.4
+                 , yesod-default                 >= 0.5        && < 0.6
+                 , clientsession                 >= 0.7.3      && < 0.8
+                 , bytestring                    >= 0.9        && < 0.10
+                 , text                          >= 0.11       && < 0.12
                  , template-haskell
-                 , hamlet           >= 0.10  && < 0.11
-                 , shakespeare-text >= 0.10  && < 0.11
-                 , wai              >= 0.4.2 && < 0.5
-                 , containers       >= 0.4   && < 0.5
-                 , mtl              >= 2.0.1 && < 2.1
-                 , random           >= 1.0   && < 1.1
-                 , split            >= 0.1.4 && < 0.2
-                 , transformers     >= 0.2   && < 0.3
+                 , hamlet                        >= 0.10       && < 0.11
+                 , shakespeare-text              >= 0.10       && < 0.11
+                 , wai                           >= 0.4.2      && < 0.5
+                 , transformers                  >= 0.2        && < 0.3
+                 , monad-control                 >= 0.3        && < 0.4
+                 , mtl          >= 2.0.1 && < 2.1
+                 , containers   >= 0.4   && < 0.5
+                 , random       >= 1.0   && < 1.1
+                 , split        >= 0.1.4 && < 0.2
+                 , transformers >= 0.2   && < 0.3

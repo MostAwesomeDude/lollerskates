@@ -5,8 +5,7 @@ module Application
     ) where
 
 import Import
-import Settings
-import Yesod.Static
+import Settings.StaticFiles (staticSite)
 import Yesod.Default.Config
 import Yesod.Default.Main (defaultDevelApp, defaultRunner)
 import Yesod.Default.Handlers (getFaviconR, getRobotsR)
@@ -27,13 +26,9 @@ mkYesodDispatch "LollerSite" resourcesLollerSite
 -- performs initialization and creates a WAI application. This is also the
 -- place to put your migrate statements to have automatic database
 -- migrations handled by Yesod.
-withLollerSite :: AppConfig DefaultEnv -> Logger -> (Application -> IO ()) -> IO ()
+withLollerSite :: AppConfig DefaultEnv () -> Logger -> (Application -> IO ()) -> IO ()
 withLollerSite conf logger f = do
-#ifdef PRODUCTION
-    s <- static Settings.staticDir
-#else
-    s <- staticDevel Settings.staticDir
-#endif
+    s <- staticSite
     let h = LollerSite conf logger s
     defaultRunner f h
 

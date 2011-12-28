@@ -13,12 +13,12 @@ module Foundation
     ) where
 
 import Prelude
-import Yesod.Core
-import Yesod.Form
+import Yesod.Core hiding (AppConfig (..))
 import Yesod.Default.Config
 import Yesod.Default.Util (addStaticContentExternal)
 import Yesod.Static (Static, base64md5, StaticRoute(..))
-import Yesod.Logger (Logger, logLazyText)
+import Settings.StaticFiles
+import Yesod.Logger (Logger, logMsg, formatLogText)
 import qualified Settings
 import Settings (widgetFile)
 import Control.Monad.Trans.Class (lift)
@@ -31,7 +31,7 @@ import Text.Hamlet (hamletFile)
 -- starts running, such as database connections. Every handler will have
 -- access to the data present here.
 data LollerSite = LollerSite
-    { settings :: AppConfig DefaultEnv
+    { settings :: AppConfig DefaultEnv ()
     , getLogger :: Logger
     , getStatic :: Static -- ^ Settings for static file serving.
     }
@@ -89,7 +89,7 @@ instance Yesod LollerSite where
     urlRenderOverride _ _ = Nothing
 
     messageLogger y loc level msg =
-      formatLogMessage loc level msg >>= logLazyText (getLogger y)
+      formatLogText (getLogger y) loc level msg >>= logMsg (getLogger y)
 
     -- This function creates static content files in the static folder
     -- and names them based on a hash of their content. This allows
