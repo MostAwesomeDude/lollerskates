@@ -5,6 +5,8 @@ import Prelude
 
 import Data.List
 import Data.List.Split
+import qualified Data.Map as M
+import Data.Maybe
 import System.Random hiding (split)
 
 import Lol.Helpers
@@ -103,7 +105,7 @@ data Item = Empty
           | SunfireCape
           | SwordOfTheDivine
           | SwordOfTheOccult
-          | TearOftheGoddess
+          | TearOfTheGoddess
           | TheBlackCleaver
           | TheBrutalizer
           | Thornmail
@@ -254,13 +256,32 @@ type Comparator = Stats -> Float
 --   list. I was considering just typing out static strings for every single
 --   item, but this is actually far less space. Seriously! (Even including
 --   this comment!)
-prettyWord :: String -> String
-prettyWord w = case w of
-    "B" -> "B."
-    "F" -> "F."
-    "Berserkers" -> "Berserker's"
-    "Rylais" -> "Rylai's"
-    _ -> w
+prettyWordMap :: M.Map String String
+prettyWordMap = M.fromList [ ("Archangels", "Archangel's")
+                           , ("Atmas", "Atma's")
+                           , ("B", "B.")
+                           , ("Banshees", "Banshee's")
+                           , ("Berserkers", "Berserker's")
+                           , ("Brawlers", "Brawler's")
+                           , ("Dorans", "Doran's")
+                           , ("Executioners", "Executioner's")
+                           , ("F", "F.")
+                           , ("Giants", "Giant's")
+                           , ("Guinsoos", "Guinsoo's")
+                           , ("Kages", "Kage's")
+                           , ("Mercurys", "Mercury's")
+                           , ("Morellos", "Morello's")
+                           , ("Nashors", "Nashor's")
+                           , ("Rabadons", "Rabadon's")
+                           , ("Randuins", "Randuin's")
+                           , ("Rylais", "Rylai's")
+                           , ("Shurelyas", "Shurelya's")
+                           , ("Sorcerors", "Sorceror's")
+                           , ("Starks", "Stark's")
+                           , ("Wardens", "Warden's")
+                           , ("Wits", "Wit's")
+                           , ("Youmuus", "Youmuu's")
+                           , ("Zhonyas", "Zhonya's") ]
 
 -- | Pretty-printing service for items, because items should be relatively
 --   pretty.
@@ -268,5 +289,6 @@ prettyItem :: Item -> String
 prettyItem =
     let predicate c = 'A' <= c && c <= 'Z'
         splitter = dropInitBlank $ keepDelimsL $ whenElt predicate
+        mapper w = fromMaybe w $ M.lookup w prettyWordMap
         joiner = intercalate " "
-    in joiner . split splitter . show
+    in joiner . map mapper . split splitter . show
