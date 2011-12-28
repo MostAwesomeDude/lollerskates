@@ -7,7 +7,10 @@ import System.Random
 
 import Lol.Items
 
-data Bravery = Bravery { bBuild :: Build }
+data Ability = Q | W | E
+    deriving (Enum, Eq, Ord, Show)
+
+data Bravery = Bravery { bBuild :: Build, bAbility :: Ability }
     deriving (Show)
 
 -- Yes, I know that this nubs, but quadratic time doesn't hurt that bad when
@@ -22,12 +25,16 @@ bootsBuild gen =
         otherItems = nub $ filter (not . isBoots) $ randoms gen'
     in (bootItem :) $ sort $ take 5 otherItems
 
+-- This function could be terser if Random were automatic on Enums. :T
+randomAbility :: RandomGen g => g -> Ability
+randomAbility = toEnum . fst . randomR (0, 2)
+
 makeBravery :: IO Bravery
 makeBravery = do
     randomgen <- getStdGen
-    return $ Bravery (randomBuild randomgen)
+    return $ Bravery (randomBuild randomgen) (randomAbility randomgen)
 
 makeBootsBravery :: IO Bravery
 makeBootsBravery = do
     randomgen <- getStdGen
-    return $ Bravery (bootsBuild randomgen)
+    return $ Bravery (bootsBuild randomgen) (randomAbility randomgen)

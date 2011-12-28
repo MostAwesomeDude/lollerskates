@@ -27,8 +27,9 @@ buildWidget is
 
 braveryWidget :: Bravery -> Widget
 braveryWidget b = [whamlet|
-<h2>Bravery:
+<h2>Build
 ^{buildWidget $ bBuild b}
+<h3>Max your #{show $ bAbility b} first!
 |]
 
 braveryForm :: AForm LollerSite LollerSite BraveryParams
