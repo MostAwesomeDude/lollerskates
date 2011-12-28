@@ -12,6 +12,5 @@ import Import
 getRootR :: Handler RepHtml
 getRootR = do
     defaultLayout $ do
-        h2id <- lift newIdent
-        setTitle "lollerskates homepage"
+        setTitle "Lollerskates!"
         $(widgetFile "homepage")
