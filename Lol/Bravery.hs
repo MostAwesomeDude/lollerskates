@@ -6,9 +6,14 @@ import Data.List
 import System.Random
 
 import Lol.Items
+import Lol.Helpers
 
 data Ability = Q | W | E
-    deriving (Enum, Eq, Ord, Show)
+    deriving (Bounded, Enum, Eq, Ord, Show)
+
+instance Random Ability where
+    randomR = boundedEnumRandomR
+    random = boundedEnumRandom
 
 data Bravery = Bravery { bBuild :: Build, bAbility :: Ability }
     deriving (Show)
@@ -27,7 +32,7 @@ bootsBuild gen =
 
 -- This function could be terser if Random were automatic on Enums. :T
 randomAbility :: RandomGen g => g -> Ability
-randomAbility = toEnum . fst . randomR (0, 2)
+randomAbility = fst . random
 
 makeBravery :: IO Bravery
 makeBravery = do
