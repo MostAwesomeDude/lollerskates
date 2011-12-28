@@ -85,4 +85,5 @@ executable         lollerskates
                  , containers       >= 0.4   && < 0.5
                  , mtl              >= 2.0.1 && < 2.1
                  , random           >= 1.0   && < 1.1
+                 , split            >= 0.1.4 && < 0.2
                  , transformers     >= 0.2   && < 0.3

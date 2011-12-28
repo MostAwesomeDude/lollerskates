@@ -12,14 +12,14 @@ itemsWidget :: [Item] -> Widget
 itemsWidget is = let zipped = zip [1 ..] is
     in [whamlet|
 $forall (index, i) <- zipped
-    <li>Item #{show index}: #{show i}
+    <li>Item #{show index}: #{prettyItem i}
 |]
 
 buildWidget :: [Item] -> Widget
 buildWidget is
     | not (null is) && isBoots (head is) = [whamlet|
 <ul>
-    <li>Boots: #{show $ head is}
+    <li>Boots: #{prettyItem $ head is}
     ^{itemsWidget $ tail is}
 |]
     | not (null is) = [whamlet|<ul>^{itemsWidget is}|]

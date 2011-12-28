@@ -3,7 +3,9 @@ module Lol.Items where
 -- Yesod hides our Prelude, so we need to explicitly ask for it.
 import Prelude
 
-import System.Random
+import Data.List
+import Data.List.Split
+import System.Random hiding (split)
 
 -- | The Item datatype.
 --   This type's constructors represent all of the different items available
@@ -251,3 +253,24 @@ addStats first second = let
 
 type Build = [Item]
 type Comparator = Stats -> Float
+
+-- | Specialized pretty words for some of the fragments of words in the item
+--   list. I was considering just typing out static strings for every single
+--   item, but this is actually far less space. Seriously! (Even including
+--   this comment!)
+prettyWord :: String -> String
+prettyWord w = case w of
+    "B" -> "B."
+    "F" -> "F."
+    "Berserkers" -> "Berserker's"
+    "Rylais" -> "Rylai's"
+    _ -> w
+
+-- | Pretty-printing service for items, because items should be relatively
+--   pretty.
+prettyItem :: Item -> String
+prettyItem =
+    let predicate c = 'A' <= c && c <= 'Z'
+        splitter = dropInitBlank $ keepDelimsL $ whenElt predicate
+        joiner = intercalate " "
+    in joiner . split splitter . show
