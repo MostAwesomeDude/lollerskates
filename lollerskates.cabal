@@ -89,3 +89,4 @@ executable         lollerskates
                  , random       >= 1.0   && < 1.1
                  , split        >= 0.1.4 && < 0.2
                  , transformers >= 0.2   && < 0.3
+                 , yesod-form   >= 0.3.4 && < 0.4

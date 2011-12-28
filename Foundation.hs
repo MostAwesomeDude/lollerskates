@@ -16,8 +16,8 @@ import Prelude
 import Yesod.Core hiding (AppConfig (..))
 import Yesod.Default.Config
 import Yesod.Default.Util (addStaticContentExternal)
+import Yesod.Form
 import Yesod.Static (Static, base64md5, StaticRoute(..))
-import Settings.StaticFiles
 import Yesod.Logger (Logger, logMsg, formatLogText)
 import qualified Settings
 import Settings (widgetFile)
