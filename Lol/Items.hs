@@ -7,6 +7,8 @@ import Data.List
 import Data.List.Split
 import System.Random hiding (split)
 
+import Lol.Helpers
+
 -- | The Item datatype.
 --   This type's constructors represent all of the different items available
 --   in Lollerskates. The list of constructors is carefully ordered to permit
@@ -121,14 +123,8 @@ data Item = Empty
 -- Enum, we go ahead and implement a straightforward and non-magical flavor of
 -- Random here.
 instance Random Item where
-    -- randomR :: RandomGen g => (Item, Item) -> g -> (Item, g)
-    randomR (first, second) gen =
-        let ifirst = fromEnum first :: Int
-            isecond = fromEnum second :: Int
-            repack (x, y) = (toEnum x, y)
-        in repack $ randomR (ifirst, isecond) gen
-    -- random :: RandomGen g => g -> (Item, g)
-    random = randomR (minBound, maxBound)
+    randomR = boundedEnumRandomR
+    random = boundedEnumRandom
 
 -- Some item classes.
 
