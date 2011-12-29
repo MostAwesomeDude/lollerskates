@@ -40,6 +40,7 @@ library
                      Lol.Items
                      Lol.Loller
                      Lol.Spells
+                     Widget
 
     ghc-options:   -Wall -threaded -O0
     cpp-options:   -DDEVELOPMENT

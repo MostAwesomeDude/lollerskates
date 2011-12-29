@@ -6,6 +6,8 @@ import Yesod.Form
 import Lol.Bravery
 import Lol.Items
 
+import Widget
+
 data BraveryParams = BraveryParams { bpRequireBoots :: Bool }
 
 itemsWidget :: [Item] -> Widget
@@ -34,6 +36,7 @@ braveryWidget b = [whamlet|
 <h2>Build
 ^{buildWidget $ bBuild b}
 <h3>Max your #{show $ bAbility b} first!
+^{statsWidget $ foldl1 addStats $ map statsFor $ bBuild b}
 |]
 
 braveryForm :: AForm LollerSite LollerSite BraveryParams
