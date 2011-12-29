@@ -27,6 +27,8 @@ buildWidget is
 
 braveryWidget :: Bravery -> Widget
 braveryWidget b = [whamlet|
+<h2>Champion
+<p>#{show $ bChamp b}
 <h2>Spells
 <p>#{show $ bSpells b}
 <h2>Build
