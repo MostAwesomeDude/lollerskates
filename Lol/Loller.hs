@@ -9,6 +9,7 @@ import Data.Ord
 
 import Lol.FD
 import Lol.Items
+import Lol.Stats
 
 -- | Turn any accessor into a comparator which considers per-gold worth of an
 --   item, by turning any field into field-per-gold.

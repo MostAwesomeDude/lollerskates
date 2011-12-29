@@ -2,7 +2,7 @@ module Widget where
 
 import Import
 
-import Lol.Items
+import Lol.Stats
 
 statsWidget :: Stats -> Widget
 statsWidget s = [whamlet|

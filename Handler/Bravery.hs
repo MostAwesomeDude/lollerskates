@@ -5,6 +5,7 @@ import Yesod.Form
 
 import Lol.Bravery
 import Lol.Items
+import Lol.Stats
 
 import Widget
 

@@ -39,6 +39,7 @@ library
                      Lol.Helpers
                      Lol.Items
                      Lol.Loller
+                     Lol.Stats
                      Lol.Spells
                      Widget
 
