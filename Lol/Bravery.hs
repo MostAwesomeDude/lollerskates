@@ -5,6 +5,7 @@ import Prelude
 import Data.List
 import System.Random
 
+import Lol.Champs
 import Lol.Items
 import Lol.Helpers
 import Lol.Spells
@@ -16,7 +17,8 @@ instance Random Ability where
     randomR = boundedEnumRandomR
     random = boundedEnumRandom
 
-data Bravery = Bravery { bSpells :: (Spell, Spell)
+data Bravery = Bravery { bChamp :: Champ
+                       , bSpells :: (Spell, Spell)
                        , bBuild :: Build
                        , bAbility :: Ability }
     deriving (Show)
@@ -43,10 +45,12 @@ randomAbility = fst . random
 
 makeBravery :: IO Bravery
 makeBravery = do
-    randomgen <- getStdGen
-    return $ Bravery (randomSpells randomgen) (randomBuild randomgen) (randomAbility randomgen)
+    g <- getStdGen
+    (champ, g) <- return $ random g
+    return $ Bravery champ (randomSpells g) (randomBuild g) (randomAbility g)
 
 makeBootsBravery :: IO Bravery
 makeBootsBravery = do
-    randomgen <- getStdGen
-    return $ Bravery (randomSpells randomgen) (bootsBuild randomgen) (randomAbility randomgen)
+    g <- getStdGen
+    (champ, g) <- return $ random g
+    return $ Bravery champ (randomSpells g) (bootsBuild g) (randomAbility g)

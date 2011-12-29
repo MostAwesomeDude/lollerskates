@@ -34,6 +34,7 @@ library
                      Handler.Bravery
                      Handler.Root
                      Lol.Bravery
+                     Lol.Champs
                      Lol.FD
                      Lol.Helpers
                      Lol.Items
