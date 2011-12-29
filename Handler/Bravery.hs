@@ -27,6 +27,8 @@ buildWidget is
 
 braveryWidget :: Bravery -> Widget
 braveryWidget b = [whamlet|
+<h2>Spells
+<p>#{show $ bSpells b}
 <h2>Build
 ^{buildWidget $ bBuild b}
 <h3>Max your #{show $ bAbility b} first!
