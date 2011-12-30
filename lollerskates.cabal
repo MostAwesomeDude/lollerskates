@@ -41,6 +41,8 @@ library
                      Lol.Loller
                      Lol.Stats
                      Lol.Stats.Champs
+                     Lol.Stats.Items
+                     Lol.Stats.Types
                      Lol.Spells
                      Widget
 

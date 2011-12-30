@@ -56,7 +56,7 @@ import Prelude
 import qualified Data.Map as M
 
 import Lol.Champs
-import Lol.Stats
+import Lol.Stats.Types
 
 champBaseStats :: M.Map Champ CoreStats
 """
