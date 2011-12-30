@@ -37,7 +37,7 @@ braveryWidget b = [whamlet|
 <h2>Build
 ^{buildWidget $ bBuild b}
 <h3>Max your #{show $ bAbility b} first!
-^{statsWidget $ foldl1 addStats $ map statsFor $ bBuild b}
+^{itemStatsWidget $ buildStats $ bBuild b}
 |]
 
 braveryForm :: AForm LollerSite LollerSite BraveryParams

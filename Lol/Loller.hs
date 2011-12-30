@@ -15,27 +15,27 @@ import Lol.Stats
 --   item, by turning any field into field-per-gold.
 --   This was the stupid ((/) `on` realToFrac) (f stats) (price stats) before,
 --   but now it's tuned to catch division-by-zero NaNs.
-worth :: (Stats -> Int) -> Stats -> Float
+worth :: Comparator -> Comparator
 worth f stats =
     let p = price stats in case p of
         0 -> 0
         _ -> realToFrac (f stats) / realToFrac p
 
 attributeFilters :: Map.Map String Comparator
-attributeFilters = Map.fromList [ ("abilitypower", toEnum . abilityPower)
-                                , ("armor", toEnum . armor)
-                                , ("attackdamage", toEnum . attackDamage)
-                                , ("attackspeed", toEnum . attackSpeed)
-                                , ("criticalchance", toEnum . criticalChance)
-                                , ("health", toEnum . health)
-                                , ("healthregen", toEnum . healthRegen)
-                                , ("lifesteal", toEnum . lifeSteal)
-                                , ("magicresist", toEnum . magicResist)
-                                , ("mana", toEnum . mana)
-                                , ("manaregen", toEnum . manaRegen)
-                                , ("movementspeed", toEnum . movementSpeed)
+attributeFilters = Map.fromList [ ("abilitypower", abilityPower)
+                                , ("armor", armor)
+                                , ("attackdamage", attackDamage)
+                                , ("attackspeed", attackSpeed)
+                                , ("criticalchance", criticalChance)
+                                , ("health", health)
+                                , ("healthregen", healthRegen)
+                                , ("lifesteal", lifeSteal)
+                                , ("magicresist", magicResist)
+                                , ("mana", mana)
+                                , ("manaregen", manaRegen)
+                                , ("movementspeed", movementSpeed)
                                 , ("price", toEnum . price)
-                                , ("spellvamp", toEnum . spellVamp)
+                                , ("spellvamp", spellVamp)
                                 -- Economic variants: The most bang for your
                                 -- buck.
                                 -- ]
@@ -71,10 +71,6 @@ withVariety :: [FDVar s] -> FD s ()
 -- withVariety = orderedEx
 withVariety = allDifferent
 
--- | Sum up the stats for a build.
-buildStats :: Build -> Stats
-buildStats = foldr (addStats . statsFor) stats
-
 -- | The 'maximumBy' function takes a comparison function and a list
 --   and returns the greatest element of the list by the comparison function.
 --   The list must be finite and non-empty.
@@ -89,9 +85,9 @@ maximumBy' cmp xs = foldl1' maxBy xs
                     _ -> y
 
 -- | Find the best item in a given attribute.
-bestItem :: Ord a => (Stats -> a) -> [Item] -> Item
-bestItem attr = maximumBy' (comparing $ attr . statsFor)
+bestItem :: Comparator -> [Item] -> Item
+bestItem attr = maximumBy' (comparing $ attr . itemStats)
 
 -- | Find the maximum build in a given attribute.
-maxBuild :: Ord a => (Stats -> a) -> [Build] -> Build
+maxBuild :: Comparator -> [Build] -> Build
 maxBuild attr = maximumBy' (comparing $ attr . buildStats)

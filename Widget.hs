@@ -4,8 +4,8 @@ import Import
 
 import Lol.Stats
 
-statsWidget :: Stats -> Widget
-statsWidget s = [whamlet|
+itemStatsWidget :: ItemStats -> Widget
+itemStatsWidget s = [whamlet|
 <h2>Stats
 <ul>
     <li>Price: #{price s}
