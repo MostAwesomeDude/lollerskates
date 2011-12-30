@@ -279,9 +279,9 @@ itemExtendedStats =
 itemStats :: Item -> ItemStats
 itemStats i =
     let price = fromMaybe 0 $ M.lookup i itemPrice
-        cs = fromMaybe cs $ M.lookup i itemCoreStats
-        es = fromMaybe es $ M.lookup i itemExtendedStats
-    in ItemStats price cs es
+        core = fromMaybe cs $ M.lookup i itemCoreStats
+        extended = fromMaybe es $ M.lookup i itemExtendedStats
+    in ItemStats price core extended
 
 addCS :: CoreStats -> CoreStats -> CoreStats
 addCS first second = let
@@ -315,21 +315,37 @@ buildStats = foldr1 addStats . map itemStats
 
 -- Accessors.
 
+price :: ItemStats -> Price
 price (ItemStats p _ _) = p
+getCoreStats :: ItemStats -> CoreStats
 getCoreStats (ItemStats _ cs _) = cs
+getExtendedStats :: ItemStats -> ExtendedStats
 getExtendedStats (ItemStats _ _ es) = es
 
+armor :: Comparator
 armor = csArmor . getCoreStats
+attackDamage :: Comparator
 attackDamage = csAttackDamage . getCoreStats
+attackSpeed :: Comparator
 attackSpeed = csAttackSpeed . getCoreStats
+health :: Comparator
 health = csHealth . getCoreStats
+healthRegen :: Comparator
 healthRegen = csHealthRegen . getCoreStats
+magicResist :: Comparator
 magicResist = csMagicResist . getCoreStats
+mana :: Comparator
 mana = csMana . getCoreStats
+manaRegen :: Comparator
 manaRegen = csManaRegen . getCoreStats
+movementSpeed :: Comparator
 movementSpeed = csMovementSpeed . getCoreStats
 
-criticalChance = esCriticalChance . getExtendedStats
-lifeSteal = esLifeSteal . getExtendedStats
-spellVamp = esSpellVamp . getExtendedStats
+abilityPower :: Comparator
 abilityPower = esAbilityPower . getExtendedStats
+criticalChance :: Comparator
+criticalChance = esCriticalChance . getExtendedStats
+lifeSteal :: Comparator
+lifeSteal = esLifeSteal . getExtendedStats
+spellVamp :: Comparator
+spellVamp = esSpellVamp . getExtendedStats
