@@ -17,7 +17,7 @@ data Champ = Ahri
            | Brand
            | Caitlyn
            | Cassiopeia
-           | Chogath
+           | ChoGath
            | Corki
            | DrMundo
            | Evelynn
@@ -39,8 +39,8 @@ data Champ = Ahri
            | Kassadin
            | Katarina
            | Kayle
-           | Kennan
-           | Kogmaw
+           | Kennen
+           | KogMaw
            | LeBlanc
            | LeeSin
            | Leona
@@ -87,6 +87,7 @@ data Champ = Ahri
            | Urgot
            | Vayne
            | Veigar
+           | Viktor
            | Vladimir
            | Volibear
            | Warwick
