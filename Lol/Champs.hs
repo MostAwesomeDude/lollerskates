@@ -101,3 +101,5 @@ data Champ = Ahri
 instance Random Champ where
     randomR = boundedEnumRandomR
     random = boundedEnumRandom
+
+type Level = Int
