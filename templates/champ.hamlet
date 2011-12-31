@@ -1,5 +1,5 @@
 <h1>Champion Statistics
-^{champWidget champ level}
+^{champWidget champ level items}
 <form method=get action=@{ChampR} enctype=#{enctype}>
     ^{form}
     <input type=submit>

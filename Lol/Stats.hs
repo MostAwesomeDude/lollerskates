@@ -75,6 +75,12 @@ champStats c l =
 buildStats :: Build -> ItemStats
 buildStats = foldr1 addStats . map itemStats
 
+-- | Apply a build to a champion.
+applyBuild :: Build -> ChampStats -> ChampStats
+applyBuild b (ChampStats ccs ces) =
+    let (ItemStats _ ics ies) = buildStats b
+    in ChampStats (addCS ccs ics) (addES ces ies)
+
 -- Accessors.
 
 price :: ItemStats -> Price
