@@ -6,3 +6,4 @@
 / RootR GET
 
 /bravery BraveryR GET
+/champ ChampR GET

@@ -1,4 +1,4 @@
 <h1>Lollerskates!
 <ul>
-    <li>
-        <a href=@{BraveryR}>Ultimate Bravery!
+    <li><a href=@{BraveryR}>Ultimate Bravery!
+    <li><a href=@{ChampR}>Champion Statistics

@@ -11,9 +11,12 @@ import Lol.Stats.Champs
 import Lol.Stats.Items
 import Lol.Stats.Types
 
-data ChampStats = ChampStats CoreStats ExtendedStats
+data ChampStats = ChampStats { cCoreStats :: CoreStats
+                             , cExtendedStats :: ExtendedStats }
     deriving (Show)
-data ItemStats = ItemStats Price CoreStats ExtendedStats
+data ItemStats = ItemStats { iPrice :: Price
+                           , iCoreStats :: CoreStats
+                           , iExtendedStats :: ExtendedStats }
     deriving (Show)
 
 type Comparator = ItemStats -> Float
@@ -75,36 +78,32 @@ buildStats = foldr1 addStats . map itemStats
 -- Accessors.
 
 price :: ItemStats -> Price
-price (ItemStats p _ _) = p
-getCoreStats :: ItemStats -> CoreStats
-getCoreStats (ItemStats _ cs _) = cs
-getExtendedStats :: ItemStats -> ExtendedStats
-getExtendedStats (ItemStats _ _ es) = es
+price = iPrice
 
 armor :: Comparator
-armor = csArmor . getCoreStats
+armor = csArmor . iCoreStats
 attackDamage :: Comparator
-attackDamage = csAttackDamage . getCoreStats
+attackDamage = csAttackDamage . iCoreStats
 attackSpeed :: Comparator
-attackSpeed = csAttackSpeed . getCoreStats
+attackSpeed = csAttackSpeed . iCoreStats
 health :: Comparator
-health = csHealth . getCoreStats
+health = csHealth . iCoreStats
 healthRegen :: Comparator
-healthRegen = csHealthRegen . getCoreStats
+healthRegen = csHealthRegen . iCoreStats
 magicResist :: Comparator
-magicResist = csMagicResist . getCoreStats
+magicResist = csMagicResist . iCoreStats
 mana :: Comparator
-mana = csMana . getCoreStats
+mana = csMana . iCoreStats
 manaRegen :: Comparator
-manaRegen = csManaRegen . getCoreStats
+manaRegen = csManaRegen . iCoreStats
 movementSpeed :: Comparator
-movementSpeed = csMovementSpeed . getCoreStats
+movementSpeed = csMovementSpeed . iCoreStats
 
 abilityPower :: Comparator
-abilityPower = esAbilityPower . getExtendedStats
+abilityPower = esAbilityPower . iExtendedStats
 criticalChance :: Comparator
-criticalChance = esCriticalChance . getExtendedStats
+criticalChance = esCriticalChance . iExtendedStats
 lifeSteal :: Comparator
-lifeSteal = esLifeSteal . getExtendedStats
+lifeSteal = esLifeSteal . iExtendedStats
 spellVamp :: Comparator
-spellVamp = esSpellVamp . getExtendedStats
+spellVamp = esSpellVamp . iExtendedStats

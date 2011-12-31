@@ -32,6 +32,7 @@ library
                      Settings
                      Settings.StaticFiles
                      Handler.Bravery
+                     Handler.Champ
                      Handler.Root
                      Lol.Bravery
                      Lol.Champs
