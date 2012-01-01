@@ -129,7 +129,11 @@ itemCoreStats =
                , (BFSword, cs { csAttackDamage = 45 })
                , (BansheesVeil,
                   cs { csHealth = 375, csMana = 375, csMagicResist = 50 })
+               , (BerserkersGreaves, cs { csMovementSpeed = 70 })
                , (BilgewaterCutlass, cs { csAttackDamage = 35 })
+               , (BootsOfSpeed, cs { csMovementSpeed = 50 })
+               , (BootsOfMobility, cs { csMovementSpeed = 70 })
+               , (BootsOfSwiftness, cs { csMovementSpeed = 90 })
                , (CatalystTheProtector, cs { csHealth = 290, csMana = 325 })
                , (ChainVest, cs { csArmor = 45 })
                , (ChaliceOfHarmony, cs { csManaRegen = 7.5, csMagicResist = 30 })
@@ -153,6 +157,7 @@ itemCoreStats =
                , (HeartOfGold, cs { csHealth = 250 })
                , (Hexdrinker, cs { csAttackDamage = 35, csMagicResist = 30 })
                , (HextechRevolver, cs { csAttackDamage = 40 })
+               , (IonianBootsOfLucidity, cs { csMovementSpeed = 70 })
                , (InfinityEdge, cs { csAttackDamage = 80 })
                , (Kindlegem, cs { csHealth = 200 })
                , (LastWhisper, cs { csAttackDamage = 40 })
@@ -162,11 +167,12 @@ itemCoreStats =
                , (Manamune,
                   cs { csMana = 350, csAttackDamage = 20, csManaRegen = 7 })
                , (MekiPendant, cs { csManaRegen = 7 })
-               , (MercurysTreads, cs { csMagicResist = 25 })
+               , (MercurysTreads,
+                  cs { csMagicResist = 25, csMovementSpeed = 70 })
                , (MorellosEvilTome, cs { csManaRegen = 12 })
                , (NashorsTooth, cs { csManaRegen = 10 })
                , (NegatronCloak, cs { csMagicResist = 48 })
-               , (NinjaTabi, cs { csArmor = 25 })
+               , (NinjaTabi, cs { csArmor = 25, csMovementSpeed = 70 })
                , (NullMagicMantle, cs { csMagicResist = 24 })
                , (Phage, cs { csHealth = 225, csAttackDamage = 18 })
                , (PhilosophersStone, cs { csHealthRegen = 18, csManaRegen = 8 })
@@ -183,6 +189,7 @@ itemCoreStats =
                , (Sheen, cs { csMana = 250 })
                , (ShurelyasReverie,
                  cs { csHealth = 330, csHealthRegen = 30, csManaRegen = 15 })
+               , (SorcerorsShoes, cs { csMovementSpeed = 70 })
                , (SoulShroud, cs { csHealth = 520 })
                , (SpiritVisage, cs { csHealth = 250, csMagicResist = 30 })
                , (SunfireCape, cs { csHealth = 450, csArmor = 45 })
