@@ -24,39 +24,33 @@ data ItemStats = ItemStats { iPrice :: Price
 
 type Comparator = ItemStats -> Float
 
-addCSWith :: (Float -> Float -> Float) -> CoreStats -> CoreStats -> CoreStats
-addCSWith op first second = let
-    h = csHealth first `op` csHealth second
-    m = csMana first `op` csMana second
-    ad = csAttackDamage first `op` csAttackDamage second
-    as = csAttackSpeed first `op` csAttackSpeed second
-    r = csRange first `op` csRange second
-    hr = csHealthRegen first `op` csHealthRegen second
-    mr = csManaRegen first `op` csManaRegen second
-    a = csArmor first `op` csArmor second
-    mres = csMagicResist first `op` csMagicResist second
-    -- XXX ms bonghits
+addCS :: CoreStats -> CoreStats -> CoreStats
+addCS first second = let
+    h = csHealth first + csHealth second
+    m = csMana first + csMana second
+    ad = csAttackDamage first + csAttackDamage second
+    as = csAttackSpeed first + csAttackSpeed second
+    r = csRange first + csRange second
+    hr = csHealthRegen first + csHealthRegen second
+    mr = csManaRegen first + csManaRegen second
+    a = csArmor first + csArmor second
+    mres = csMagicResist first + csMagicResist second
     ms = max (csMovementSpeed first) (csMovementSpeed second)
     in CoreStats h m ad as r hr mr a mres ms
-
-addCS = addCSWith (+)
-mulCS = addCSWith (*)
 
 csAtLevel :: Level -> CoreStats -> CoreStats
 csAtLevel level (CoreStats a b c d e f g h i j) =
     let l = fromIntegral level
     in CoreStats (a*l) (b*l) (c*l) (d*l) (e*l) (f*l) (g*l) (h*l) (i*l) (j*l)
 
-addESWith :: (Float -> Float -> Float) -> ExtendedStats -> ExtendedStats -> ExtendedStats
-addESWith op first second = let
-    ap = esAbilityPower first `op` esAbilityPower second
-    steal = esLifeSteal first `op` esLifeSteal second
-    vamp = esSpellVamp first `op` esSpellVamp second
-    cc = esCriticalChance first `op` esCriticalChance second
-    bms = esBonusMovementSpeed first `op` esBonusMovementSpeed second
+addES :: ExtendedStats -> ExtendedStats -> ExtendedStats
+addES first second = let
+    ap = esAbilityPower first + esAbilityPower second
+    steal = esLifeSteal first + esLifeSteal second
+    vamp = esSpellVamp first + esSpellVamp second
+    cc = esCriticalChance first + esCriticalChance second
+    bms = esBonusMovementSpeed first + esBonusMovementSpeed second
     in ExtendedStats ap steal vamp cc bms
-
-addES = addESWith (+)
 
 itemStats :: Item -> ItemStats
 itemStats i =
