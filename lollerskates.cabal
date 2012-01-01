@@ -39,6 +39,7 @@ library
                      Lol.FD
                      Lol.Helpers
                      Lol.Items
+                     Lol.Maths
                      Lol.Loller
                      Lol.Stats
                      Lol.Stats.Champs

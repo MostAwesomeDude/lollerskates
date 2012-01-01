@@ -44,11 +44,13 @@ champForm = ChampParams
     <*> areq (selectField itemChoices) "Item 6" (Just Empty)
 
 champWidget :: Champ -> Level -> Build -> Widget
-champWidget c l b = [whamlet|
+champWidget c l b = let finisher = finalizeStats . (applyBuild b)
+    in [whamlet|
 <h2>#{show c} at Level #{l} with items #{show b}
-^{champStatsWidget $ applyBuild b $ champStats c l}
+^{champStatsWidget $ finisher $ champStats c l}
 |]
 
+repack :: ChampParams -> (Champ, Level, Build)
 repack (ChampParams c l i1 i2 i3 i4 i5 i6) = (c, l, [i1,i2,i3,i4,i5,i6])
 
 getChampR :: Handler RepHtml

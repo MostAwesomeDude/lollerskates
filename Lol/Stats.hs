@@ -2,11 +2,14 @@ module Lol.Stats where
 
 import Prelude
 
+import Control.Monad.ST
 import qualified Data.Map as M
 import Data.Maybe
+import Data.STRef
 
 import Lol.Champs
 import Lol.Items
+import Lol.Maths
 import Lol.Stats.Champs
 import Lol.Stats.Items
 import Lol.Stats.Types
@@ -50,7 +53,8 @@ addESWith op first second = let
     steal = esLifeSteal first `op` esLifeSteal second
     vamp = esSpellVamp first `op` esSpellVamp second
     cc = esCriticalChance first `op` esCriticalChance second
-    in ExtendedStats ap steal vamp cc
+    bms = esBonusMovementSpeed first `op` esBonusMovementSpeed second
+    in ExtendedStats ap steal vamp cc bms
 
 addES = addESWith (+)
 
@@ -80,6 +84,16 @@ applyBuild :: Build -> ChampStats -> ChampStats
 applyBuild b (ChampStats ccs ces) =
     let (ItemStats _ ics ies) = buildStats b
     in ChampStats (addCS ccs ics) (addES ces ies)
+
+-- | Finalize a champion build statistics.
+finalizeStats :: ChampStats -> ChampStats
+finalizeStats (ChampStats ccs ces) = runST $ do
+    core <- newSTRef ccs
+    -- Apply movement speed.
+    modifySTRef core $ flip finalizeMovementSpeed ces
+    -- All done!
+    core' <- readSTRef core
+    return $ ChampStats core' ces
 
 -- Accessors.
 

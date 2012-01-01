@@ -19,5 +19,6 @@ data CoreStats = CoreStats { csHealth :: Float
 data ExtendedStats = ExtendedStats { esAbilityPower :: Float
                                    , esLifeSteal :: Float
                                    , esSpellVamp :: Float
-                                   , esCriticalChance :: Float }
+                                   , esCriticalChance :: Float
+                                   , esBonusMovementSpeed :: Float }
     deriving (Show)
