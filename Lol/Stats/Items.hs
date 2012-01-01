@@ -228,6 +228,7 @@ itemExtendedStats =
                , (ExecutionersCalling,
                   es { esLifeSteal = 18, esCriticalChance = 15 })
                , (FiendishCodex, es { esAbilityPower = 30 })
+               , (ForceOfNature, es { esBonusMovementSpeed = 0.08 })
                , (GuinsoosRageblade, es { esAbilityPower = 45 })
                , (HauntingGuise, es { esAbilityPower = 25 })
                , (HextechGunblade,
@@ -235,21 +236,25 @@ itemExtendedStats =
                , (HextechRevolver, es { esAbilityPower = 40 })
                , (InfinityEdge, es { esCriticalChance = 25 })
                , (KagesLuckyPick, es { esAbilityPower = 25 })
-               , (LichBane, es { esAbilityPower = 80 })
+               , (LichBane,
+                  es { esAbilityPower = 80, esBonusMovementSpeed = 0.07 })
                , (Malady, es { esAbilityPower = 25 })
                , (MoonflairSpellblade, es { esAbilityPower = 50 })
                , (MorellosEvilTome, es { esAbilityPower = 75 })
                , (NeedlesslyLargeRod, es { esAbilityPower = 80 })
-               , (PhantomDancer, es { esCriticalChance = 30 })
+               , (PhantomDancer,
+                  es { esCriticalChance = 30, esBonusMovementSpeed = 0.15 })
                , (RabadonsDeathcap, es { esAbilityPower = 140 })
                , (RodOfAges, es { esAbilityPower = 60 })
                , (RylaisCrystalScepter, es { esAbilityPower = 80 })
                , (Sheen, es { esAbilityPower = 25 })
-               , (TrinityForce,
-                  es { esAbilityPower = 30, esCriticalChance = 15 })
+               , (TrinityForce, es { esAbilityPower = 30
+                                   , esCriticalChance = 15
+                                   , esBonusMovementSpeed = 0.12 })
                , (VampiricScepter, es { esLifeSteal = 12 })
                , (VoidStaff, es { esAbilityPower = 70 })
                , (WillOfTheAncients, es { esAbilityPower = 50 })
                , (YoumuusGhostblade, es { esCriticalChance = 15 })
-               , (Zeal, es { esCriticalChance = 10 })
+               , (Zeal,
+                  es { esCriticalChance = 10, esBonusMovementSpeed = 0.08 })
                , (ZhonyasHourglass, es { esAbilityPower = 100 }) ]
