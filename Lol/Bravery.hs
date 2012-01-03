@@ -2,6 +2,7 @@ module Lol.Bravery where
 
 import Prelude
 
+import Control.Monad.Random
 import Data.List
 import System.Random
 
@@ -25,32 +26,33 @@ data Bravery = Bravery { bChamp :: Champ
 
 -- Yes, I know that this nubs, but quadratic time doesn't hurt that bad when
 -- there's only 6 items being taken.
-randomBuild :: RandomGen g => g -> Build
-randomBuild = sort . take 6 . nub . randoms
+randomBuild :: MonadRandom m => m Build
+randomBuild = getRandoms >>= (return . sort . take 6 . nub)
 
-randomSpells :: RandomGen g => g -> (Spell, Spell)
-randomSpells = let packer (a1:a2:as) = (a1, a2)
-    in packer . sort . take 2 . nub . randoms
-
-bootsBuild :: RandomGen g => g -> Build
-bootsBuild gen =
+bootsBuild :: MonadRandom m => m Build
+bootsBuild = do
     -- Remember, randomR takes a *range*, this is the A-Z of boots
-    let (bootItem, gen') = randomR (BerserkersGreaves, SorcerorsShoes) gen
-        otherItems = nub $ filter (not . isBoots) $ randoms gen'
-    in (bootItem :) $ sort $ take 5 otherItems
+    boots <- getRandomR (BerserkersGreaves, SorcerorsShoes)
+    raw <- getRandoms
+    let filtered = sort . take 5 . nub . filter (not . isBoots) $ raw
+    return $ boots : filtered
 
--- This function could be terser if Random were automatic on Enums. :T
-randomAbility :: RandomGen g => g -> Ability
-randomAbility = fst . random
+randomSpells :: MonadRandom m => m (Spell, Spell)
+randomSpells = let packer (a1:a2:as) = (a1, a2)
+    in getRandoms >>= (return . packer . sort . take 2 . nub)
 
-makeBravery :: IO Bravery
+makeBravery :: MonadRandom m => m Bravery
 makeBravery = do
-    g <- getStdGen
-    (champ, g) <- return $ random g
-    return $ Bravery champ (randomSpells g) (randomBuild g) (randomAbility g)
+    champ <- getRandom
+    build <- randomBuild
+    spells <- randomSpells
+    ability <- getRandom
+    return $ Bravery champ spells build ability
 
-makeBootsBravery :: IO Bravery
+makeBootsBravery :: MonadRandom m => m Bravery
 makeBootsBravery = do
-    g <- getStdGen
-    (champ, g) <- return $ random g
-    return $ Bravery champ (randomSpells g) (bootsBuild g) (randomAbility g)
+    champ <- getRandom
+    build <- bootsBuild
+    spells <- randomSpells
+    ability <- getRandom
+    return $ Bravery champ spells build ability
