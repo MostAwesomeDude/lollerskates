@@ -15,33 +15,31 @@ import Lol.Stats.Champs
 import Lol.Stats.Items
 import Lol.Stats.Types
 
-data ChampStats = ChampStats { cCoreStats :: CoreStats
-                             , cExtendedStats :: ExtendedStats }
+data ChampStats = ChampStats { _cCoreStats :: CoreStats
+                             , _cExtendedStats :: ExtendedStats }
     deriving (Show)
 
 $( makeLens ''ChampStats )
 
-data ItemStats = ItemStats { iPrice :: Price
-                           , iCoreStats :: CoreStats
-                           , iExtendedStats :: ExtendedStats }
+data ItemStats = ItemStats { _iPrice :: Price
+                           , _iCoreStats :: CoreStats
+                           , _iExtendedStats :: ExtendedStats }
     deriving (Show)
 
 $( makeLens ''ItemStats )
 
-type Comparator = ItemStats -> Float
-
 addCS :: CoreStats -> CoreStats -> CoreStats
 addCS first second = let
-    h = csHealth first + csHealth second
-    m = csMana first + csMana second
-    ad = csAttackDamage first + csAttackDamage second
-    as = csAttackSpeed first + csAttackSpeed second
-    r = csRange first + csRange second
-    hr = csHealthRegen first + csHealthRegen second
-    mr = csManaRegen first + csManaRegen second
-    a = csArmor first + csArmor second
-    mres = csMagicResist first + csMagicResist second
-    ms = max (csMovementSpeed first) (csMovementSpeed second)
+    h = _csHealth first + _csHealth second
+    m = _csMana first + _csMana second
+    ad = _csAttackDamage first + _csAttackDamage second
+    as = _csAttackSpeed first + _csAttackSpeed second
+    r = _csRange first + _csRange second
+    hr = _csHealthRegen first + _csHealthRegen second
+    mr = _csManaRegen first + _csManaRegen second
+    a = _csArmor first + _csArmor second
+    mres = _csMagicResist first + _csMagicResist second
+    ms = max (_csMovementSpeed first) (_csMovementSpeed second)
     in CoreStats h m ad as r hr mr a mres ms
 
 csAtLevel :: Level -> CoreStats -> CoreStats
@@ -51,11 +49,11 @@ csAtLevel level (CoreStats a b c d e f g h i j) =
 
 addES :: ExtendedStats -> ExtendedStats -> ExtendedStats
 addES first second = let
-    ap = esAbilityPower first + esAbilityPower second
-    steal = esLifeSteal first + esLifeSteal second
-    vamp = esSpellVamp first + esSpellVamp second
-    cc = esCriticalChance first + esCriticalChance second
-    bms = esBonusMovementSpeed first + esBonusMovementSpeed second
+    ap = _esAbilityPower first + _esAbilityPower second
+    steal = _esLifeSteal first + _esLifeSteal second
+    vamp = _esSpellVamp first + _esSpellVamp second
+    cc = _esCriticalChance first + _esCriticalChance second
+    bms = _esBonusMovementSpeed first + _esBonusMovementSpeed second
     in ExtendedStats ap steal vamp cc bms
 
 itemStats :: Item -> ItemStats
@@ -94,36 +92,3 @@ finalizeStats (ChampStats ccs ces) = runST $ do
     -- All done!
     core' <- readSTRef core
     return $ ChampStats core' ces
-
--- Accessors.
-
-price :: ItemStats -> Price
-price = iPrice
-
-armor :: Comparator
-armor = csArmor . iCoreStats
-attackDamage :: Comparator
-attackDamage = csAttackDamage . iCoreStats
-attackSpeed :: Comparator
-attackSpeed = csAttackSpeed . iCoreStats
-health :: Comparator
-health = csHealth . iCoreStats
-healthRegen :: Comparator
-healthRegen = csHealthRegen . iCoreStats
-magicResist :: Comparator
-magicResist = csMagicResist . iCoreStats
-mana :: Comparator
-mana = csMana . iCoreStats
-manaRegen :: Comparator
-manaRegen = csManaRegen . iCoreStats
-movementSpeed :: Comparator
-movementSpeed = csMovementSpeed . iCoreStats
-
-abilityPower :: Comparator
-abilityPower = esAbilityPower . iExtendedStats
-criticalChance :: Comparator
-criticalChance = esCriticalChance . iExtendedStats
-lifeSteal :: Comparator
-lifeSteal = esLifeSteal . iExtendedStats
-spellVamp :: Comparator
-spellVamp = esSpellVamp . iExtendedStats

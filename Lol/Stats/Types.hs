@@ -6,25 +6,25 @@ import Data.Lens.Template
 
 type Price = Int
 
-data CoreStats = CoreStats { csHealth :: Float
-                           , csMana :: Float
-                           , csAttackDamage :: Float
-                           , csAttackSpeed :: Float
-                           , csRange :: Float
-                           , csHealthRegen :: Float
-                           , csManaRegen :: Float
-                           , csArmor :: Float
-                           , csMagicResist :: Float
-                           , csMovementSpeed :: Float }
+data CoreStats = CoreStats { _csHealth :: Float
+                           , _csMana :: Float
+                           , _csAttackDamage :: Float
+                           , _csAttackSpeed :: Float
+                           , _csRange :: Float
+                           , _csHealthRegen :: Float
+                           , _csManaRegen :: Float
+                           , _csArmor :: Float
+                           , _csMagicResist :: Float
+                           , _csMovementSpeed :: Float }
     deriving (Show)
 
 $( makeLens ''CoreStats )
 
-data ExtendedStats = ExtendedStats { esAbilityPower :: Float
-                                   , esLifeSteal :: Float
-                                   , esSpellVamp :: Float
-                                   , esCriticalChance :: Float
-                                   , esBonusMovementSpeed :: Float }
+data ExtendedStats = ExtendedStats { _esAbilityPower :: Float
+                                   , _esLifeSteal :: Float
+                                   , _esSpellVamp :: Float
+                                   , _esCriticalChance :: Float
+                                   , _esBonusMovementSpeed :: Float }
     deriving (Show)
 
 $( makeLens ''ExtendedStats )

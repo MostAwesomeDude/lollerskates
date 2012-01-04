@@ -1,8 +1,10 @@
 module Lol.Loller where
 
 -- Yesod hides the Prelude. We want it back.
-import Prelude
+import Prelude hiding ((.))
 
+import Control.Category
+import Data.Lens.Common
 import Data.List
 import qualified Data.Map as Map
 import Data.Ord
@@ -10,16 +12,57 @@ import Data.Ord
 import Lol.FD
 import Lol.Items
 import Lol.Stats
+import Lol.Stats.Types
+
+type Comparator = Lens ItemStats Float
+
+priceLens :: Lens Price Float
+priceLens = iso toEnum fromEnum
+
+-- Accessors.
+
+price :: Comparator
+price = priceLens . iPrice
+
+armor :: Comparator
+armor = csArmor . iCoreStats
+attackDamage :: Comparator
+attackDamage = csAttackDamage . iCoreStats
+attackSpeed :: Comparator
+attackSpeed = csAttackSpeed . iCoreStats
+health :: Comparator
+health = csHealth . iCoreStats
+healthRegen :: Comparator
+healthRegen = csHealthRegen . iCoreStats
+magicResist :: Comparator
+magicResist = csMagicResist . iCoreStats
+mana :: Comparator
+mana = csMana . iCoreStats
+manaRegen :: Comparator
+manaRegen = csManaRegen . iCoreStats
+movementSpeed :: Comparator
+movementSpeed = csMovementSpeed . iCoreStats
+
+abilityPower :: Comparator
+abilityPower = esAbilityPower . iExtendedStats
+criticalChance :: Comparator
+criticalChance = esCriticalChance . iExtendedStats
+lifeSteal :: Comparator
+lifeSteal = esLifeSteal . iExtendedStats
+spellVamp :: Comparator
+spellVamp = esSpellVamp . iExtendedStats
 
 -- | Turn any accessor into a comparator which considers per-gold worth of an
 --   item, by turning any field into field-per-gold.
 --   This was the stupid ((/) `on` realToFrac) (f stats) (price stats) before,
 --   but now it's tuned to catch division-by-zero NaNs.
 worth :: Comparator -> Comparator
-worth f stats =
-    let p = price stats in case p of
-        0 -> 0
-        _ -> realToFrac (f stats) / realToFrac p
+worth l =
+    let getter stats = case price ^$ stats of
+            0 -> 0
+            _ -> (l ^$ stats) / realToFrac (price ^$ stats)
+        setter _ stats = stats
+    in lens getter setter
 
 attributeFilters :: Map.Map String Comparator
 attributeFilters = Map.fromList [ ("abilitypower", abilityPower)
@@ -34,7 +77,7 @@ attributeFilters = Map.fromList [ ("abilitypower", abilityPower)
                                 , ("mana", mana)
                                 , ("manaregen", manaRegen)
                                 , ("movementspeed", movementSpeed)
-                                , ("price", toEnum . price)
+                                , ("price", price)
                                 , ("spellvamp", spellVamp)
                                 -- Economic variants: The most bang for your
                                 -- buck.
@@ -86,8 +129,8 @@ maximumBy' cmp xs = foldl1' maxBy xs
 
 -- | Find the best item in a given attribute.
 bestItem :: Comparator -> [Item] -> Item
-bestItem attr = maximumBy' (comparing $ attr . itemStats)
+bestItem attr = maximumBy' (comparing (getL attr . itemStats))
 
 -- | Find the maximum build in a given attribute.
 maxBuild :: Comparator -> [Build] -> Build
-maxBuild attr = maximumBy' (comparing $ attr . buildStats)
+maxBuild attr = maximumBy' (comparing (getL attr . buildStats))

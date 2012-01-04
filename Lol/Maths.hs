@@ -2,6 +2,8 @@ module Lol.Maths where
 
 import Prelude
 
+import Data.Lens.Common
+
 import Lol.Stats.Types
 
 -- Throughout this module, the verb "to finalize" is specifically used to
@@ -21,6 +23,6 @@ equalizeMovementSpeed ms | ms < 220  = ms * 0.5 + 110
 --   MS_f = equalize((MS_b + MS_flat) * sum(MS_bonus))
 finalizeMovementSpeed :: CoreStats -> ExtendedStats -> CoreStats
 finalizeMovementSpeed core extended =
-    let base = csMovementSpeed core
-        bonus = 1 + esBonusMovementSpeed extended
-    in core { csMovementSpeed = equalizeMovementSpeed $ base * bonus }
+    let bonus = 1 + (esBonusMovementSpeed ^$ extended)
+        equalizer = equalizeMovementSpeed . (bonus *)
+    in csMovementSpeed ^%= equalizer $ core
