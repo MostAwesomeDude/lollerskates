@@ -10,7 +10,6 @@ import Import
 -- functions. You can spread them across multiple files if you are so
 -- inclined, or create a single monolithic file.
 getRootR :: Handler RepHtml
-getRootR = do
-    defaultLayout $ do
-        setTitle "Lollerskates!"
-        $(widgetFile "homepage")
+getRootR = defaultLayout $ do
+    setTitle "Lollerskates!"
+    $(widgetFile "homepage")

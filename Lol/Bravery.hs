@@ -2,6 +2,7 @@ module Lol.Bravery where
 
 import Prelude
 
+import Control.Monad
 import Control.Monad.Random
 import Data.List
 import System.Random
@@ -27,7 +28,7 @@ data Bravery = Bravery { bChamp :: Champ
 -- Yes, I know that this nubs, but quadratic time doesn't hurt that bad when
 -- there's only 6 items being taken.
 randomBuild :: MonadRandom m => m Build
-randomBuild = getRandoms >>= (return . sort . take 6 . nub)
+randomBuild = liftM (sort . take 6 . nub) getRandoms
 
 bootsBuild :: MonadRandom m => m Build
 bootsBuild = do
@@ -38,8 +39,8 @@ bootsBuild = do
     return $ boots : filtered
 
 randomSpells :: MonadRandom m => m (Spell, Spell)
-randomSpells = let packer (a1:a2:as) = (a1, a2)
-    in getRandoms >>= (return . packer . sort . take 2 . nub)
+randomSpells = let packer (a1:a2:[]) = (a1, a2)
+    in liftM (packer . sort . take 2 . nub) getRandoms
 
 makeBravery :: MonadRandom m => m Bravery
 makeBravery = do

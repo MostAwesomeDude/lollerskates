@@ -3,7 +3,6 @@ module Lol.Items where
 -- Yesod hides our Prelude, so we need to explicitly ask for it.
 import Prelude
 
-import Data.List
 import Data.List.Split
 import qualified Data.Map as M
 import Data.Maybe
@@ -180,5 +179,4 @@ prettyItem =
     let predicate c = 'A' <= c && c <= 'Z'
         splitter = dropInitBlank $ keepDelimsL $ whenElt predicate
         mapper w = fromMaybe w $ M.lookup w prettyWordMap
-        joiner = intercalate " "
-    in joiner . map mapper . split splitter . show
+    in unwords . map mapper . split splitter . show
