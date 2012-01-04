@@ -3,6 +3,7 @@ module Lol.Stats where
 import Prelude
 
 import Control.Monad.ST
+import Data.Lens.Template
 import qualified Data.Map as M
 import Data.Maybe
 import Data.STRef
@@ -17,10 +18,15 @@ import Lol.Stats.Types
 data ChampStats = ChampStats { cCoreStats :: CoreStats
                              , cExtendedStats :: ExtendedStats }
     deriving (Show)
+
+$( makeLens ''ChampStats )
+
 data ItemStats = ItemStats { iPrice :: Price
                            , iCoreStats :: CoreStats
                            , iExtendedStats :: ExtendedStats }
     deriving (Show)
+
+$( makeLens ''ItemStats )
 
 type Comparator = ItemStats -> Float
 

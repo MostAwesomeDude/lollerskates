@@ -2,6 +2,8 @@ module Lol.Stats.Types where
 
 import Prelude
 
+import Data.Lens.Template
+
 type Price = Int
 
 data CoreStats = CoreStats { csHealth :: Float
@@ -16,9 +18,13 @@ data CoreStats = CoreStats { csHealth :: Float
                            , csMovementSpeed :: Float }
     deriving (Show)
 
+$( makeLens ''CoreStats )
+
 data ExtendedStats = ExtendedStats { esAbilityPower :: Float
                                    , esLifeSteal :: Float
                                    , esSpellVamp :: Float
                                    , esCriticalChance :: Float
                                    , esBonusMovementSpeed :: Float }
     deriving (Show)
+
+$( makeLens ''ExtendedStats )
