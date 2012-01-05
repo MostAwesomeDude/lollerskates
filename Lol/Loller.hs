@@ -132,5 +132,5 @@ bestItem :: Comparator -> [Item] -> Item
 bestItem attr = maximumBy' (comparing (getL attr . itemStats))
 
 -- | Find the maximum build in a given attribute.
-maxBuild :: Comparator -> [Build] -> Build
+maxBuild :: Comparator -> [[Item]] -> [Item]
 maxBuild attr = maximumBy' (comparing (getL attr . buildStats))

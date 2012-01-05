@@ -139,8 +139,6 @@ isBoots = flip elem boots
 hasBoots :: [Item] -> Bool
 hasBoots = any isBoots
 
-type Build = [Item]
-
 -- | Specialized pretty words for some of the fragments of words in the item
 --   list. I was considering just typing out static strings for every single
 --   item, but this is actually far less space. Seriously! (Even including

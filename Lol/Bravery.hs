@@ -19,18 +19,19 @@ instance Random Ability where
     randomR = boundedEnumRandomR
     random = boundedEnumRandom
 
+-- XXX lenses
 data Bravery = Bravery { bChamp :: Champ
                        , bSpells :: (Spell, Spell)
-                       , bBuild :: Build
+                       , bBuild :: [Item]
                        , bAbility :: Ability }
     deriving (Show)
 
 -- Yes, I know that this nubs, but quadratic time doesn't hurt that bad when
 -- there's only 6 items being taken.
-randomBuild :: MonadRandom m => m Build
+randomBuild :: MonadRandom m => m [Item]
 randomBuild = liftM (sort . take 6 . nub) getRandoms
 
-bootsBuild :: MonadRandom m => m Build
+bootsBuild :: MonadRandom m => m [Item]
 bootsBuild = do
     -- Remember, randomR takes a *range*, this is the A-Z of boots
     boots <- getRandomR (BerserkersGreaves, SorcerorsShoes)

@@ -74,11 +74,11 @@ champStats c l =
     in ChampStats (addCS base levels) es
 
 -- | Sum up the stats for a build.
-buildStats :: Build -> ItemStats
+buildStats :: [Item] -> ItemStats
 buildStats = foldr1 addStats . map itemStats
 
 -- | Apply a build to a champion.
-applyBuild :: Build -> ChampStats -> ChampStats
+applyBuild :: [Item] -> ChampStats -> ChampStats
 applyBuild b (ChampStats ccs ces) =
     let (ItemStats _ ics ies) = buildStats b
     in ChampStats (addCS ccs ics) (addES ces ies)
