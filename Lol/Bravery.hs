@@ -4,6 +4,7 @@ import Prelude
 
 import Control.Monad
 import Control.Monad.Random
+import Data.Lens.Template
 import Data.List
 import System.Random
 
@@ -19,12 +20,13 @@ instance Random Ability where
     randomR = boundedEnumRandomR
     random = boundedEnumRandom
 
--- XXX lenses
-data Bravery = Bravery { bChamp :: Champ
-                       , bSpells :: (Spell, Spell)
-                       , bBuild :: [Item]
-                       , bAbility :: Ability }
+data Bravery = Bravery { _bChamp :: Champ
+                       , _bSpells :: (Spell, Spell)
+                       , _bBuild :: [Item]
+                       , _bAbility :: Ability }
     deriving (Show)
+
+$( makeLens ''Bravery )
 
 -- Yes, I know that this nubs, but quadratic time doesn't hurt that bad when
 -- there's only 6 items being taken.

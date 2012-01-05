@@ -3,6 +3,8 @@ module Handler.Bravery where
 import Import
 import Yesod.Form
 
+import Data.Lens.Common
+
 import Lol.Bravery
 import Lol.Items
 import Lol.Stats
@@ -31,13 +33,13 @@ buildWidget [] = [whamlet|<p>Implementation error: buildWidget: empty list|]
 braveryWidget :: Bravery -> Widget
 braveryWidget b = [whamlet|
 <h2>Champion
-<p>#{show $ bChamp b}
+<p>#{show $ getL bChamp b}
 <h2>Spells
-<p>#{show $ bSpells b}
+<p>#{show $ getL bSpells b}
 <h2>Build
-^{buildWidget $ bBuild b}
-<h3>Max your #{show $ bAbility b} first!
-^{itemStatsWidget $ buildStats $ bBuild b}
+^{buildWidget $ getL bBuild b}
+<h3>Max your #{show $ getL bAbility b} first!
+^{itemStatsWidget $ buildStats $ getL bBuild b}
 |]
 
 braveryForm :: AForm LollerSite LollerSite BraveryParams
