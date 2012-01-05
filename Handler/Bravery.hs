@@ -7,9 +7,6 @@ import Data.Lens.Common
 
 import Lol.Bravery
 import Lol.Items
-import Lol.Stats
-
-import Widget
 
 data BraveryParams = BraveryParams { bpRequireBoots :: Bool }
 
@@ -39,7 +36,6 @@ braveryWidget b = [whamlet|
 <h2>Build
 ^{buildWidget $ getL bBuild b}
 <h3>Max your #{show $ getL bAbility b} first!
-^{itemStatsWidget $ buildStats $ getL bBuild b}
 |]
 
 braveryForm :: AForm LollerSite LollerSite BraveryParams
