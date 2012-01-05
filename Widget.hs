@@ -21,25 +21,30 @@ coreStatsWidget cs = [whamlet|
     <li>Movement Speed: #{getL csMovementSpeed cs}
 |]
 
-extendedStatsWidget :: ExtendedStats -> Widget
-extendedStatsWidget es = [whamlet|
+-- | Display extended statistics.
+--   The first boolean parameter determines whether bonuses are displayed.
+--   Items probably want it, champions probably don't.
+extendedStatsWidget :: Bool -> ExtendedStats -> Widget
+extendedStatsWidget bonuses es = [whamlet|
 <ul>
     <li>AP: #{getL esAbilityPower es}
     <li>Lifesteal: #{getL esLifeSteal es}
     <li>Vamp: #{getL esSpellVamp es}
     <li>Crit Chance: #{getL esCriticalChance es}
+    $if bonuses
+    <li>Bonus MS: #{getL esBonusMovementSpeed es}
 |]
 
 champStatsWidget :: ChampStats -> Widget
 champStatsWidget cs = [whamlet|
 <h2>Champion Stats
 ^{coreStatsWidget $ getL cCoreStats cs}
-^{extendedStatsWidget $ getL cExtendedStats cs}
+^{extendedStatsWidget False $ getL cExtendedStats cs}
 |]
 
 itemStatsWidget :: ItemStats -> Widget
 itemStatsWidget is = [whamlet|
 <h2>Item Stats
 ^{coreStatsWidget $ getL iCoreStats is}
-^{extendedStatsWidget $ getL iExtendedStats is}
+^{extendedStatsWidget True $ getL iExtendedStats is}
 |]
