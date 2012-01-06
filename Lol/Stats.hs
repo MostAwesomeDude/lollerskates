@@ -76,17 +76,22 @@ makeChampStats champ level items = execState pipeline (ChampStats base es)
                 when (champ == Tristana) (void $ csRange += 9 * (flevel - 1))
             -- Now grab all of the stats from the items, and add them in.
             focus cCoreStats $ do
-                csHealth += sum (map (csHealth ^$) itemcorestats)
-                csHealthRegen += sum (map (csHealthRegen ^$) itemcorestats)
-                csMana += sum (map (csMana ^$) itemcorestats)
-                csManaRegen += sum (map (csManaRegen ^$) itemcorestats)
-                csAttackDamage += sum (map (csAttackDamage ^$) itemcorestats)
+                csHealth += sum (map (csHealth ^$) icstats)
+                csHealthRegen += sum (map (csHealthRegen ^$) icstats)
+                csMana += sum (map (csMana ^$) icstats)
+                csManaRegen += sum (map (csManaRegen ^$) icstats)
+                csAttackDamage += sum (map (csAttackDamage ^$) icstats)
                 -- XXX not even close.
-                csAttackSpeed += sum (map (csAttackSpeed ^$) itemcorestats)
-                csArmor += sum (map (csArmor ^$) itemcorestats)
-                csMagicResist += sum (map (csMagicResist ^$) itemcorestats)
+                csAttackSpeed += sum (map (csAttackSpeed ^$) icstats)
+                csArmor += sum (map (csArmor ^$) icstats)
+                csMagicResist += sum (map (csMagicResist ^$) icstats)
                 -- Movement speed is done later. Range isn't provided by any
                 -- item.
+            focus cExtendedStats $ do
+                esAbilityPower += sum (map (esAbilityPower ^$) iestats)
+                esLifeSteal += sum (map (esLifeSteal ^$) iestats)
+                esSpellVamp += sum (map (esSpellVamp ^$) iestats)
+                esCriticalChance += sum (map (esCriticalChance ^$) iestats)
             -- Clamp movement speed.
             ces <- access cExtendedStats
             cCoreStats %= flip finalizeMovementSpeed ces
@@ -97,7 +102,7 @@ makeChampStats champ level items = execState pipeline (ChampStats base es)
         perlevel = champLevelStats M.! champ
         flevel :: Float
         flevel = realToFrac level
-        itemcorestats :: [CoreStats]
-        itemcorestats = map (getL iCoreStats . itemStats) items
-        itemextendedstats :: [ExtendedStats]
-        itemextendedstats = map (getL iExtendedStats . itemStats) items
+        icstats :: [CoreStats]
+        icstats = map (getL iCoreStats . itemStats) items
+        iestats :: [ExtendedStats]
+        iestats = map (getL iExtendedStats . itemStats) items
