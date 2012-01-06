@@ -23,10 +23,6 @@ packBuildItems ([a,b,c,d,e,f]) = (a,b,c,d,e,f)
 packBuildItems _ =
     error "Implementation error: packBuildItems called with /= 6 items"
 
--- Icky but will be cleaned up later.
-makeChampStats :: Champ -> Level -> [Item] -> ChampStats
-makeChampStats c l is = finalizeStats $ applyBuild is $ champStats c l
-
 makeBuild :: Champ -> Level -> [Item] -> Build
 makeBuild c l is =
     let stats = makeChampStats c l is
