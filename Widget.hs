@@ -19,6 +19,7 @@ coreStatsWidget cs = [whamlet|
     <li>MR: #{getL csMagicResist cs}
     <li>AS: #{getL csAttackSpeed cs}
     <li>Movement Speed: #{getL csMovementSpeed cs}
+    <li>Range: #{getL csRange cs}
 |]
 
 -- | Display extended statistics.
