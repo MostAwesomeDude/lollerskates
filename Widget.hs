@@ -33,7 +33,7 @@ extendedStatsWidget bonuses es = [whamlet|
     <li>Vamp: #{getL esSpellVamp es}
     <li>Crit Chance: #{getL esCriticalChance es}
     $if bonuses
-    <li>Bonus MS: #{getL esBonusMovementSpeed es}
+        <li>Bonus MS: #{getL esBonusMovementSpeed es}
 |]
 
 champStatsWidget :: ChampStats -> Widget
