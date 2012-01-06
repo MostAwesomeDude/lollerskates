@@ -9,6 +9,7 @@ import Data.List
 import qualified Data.Map as Map
 import Data.Ord
 
+import Lol.Build
 import Lol.FD
 import Lol.Items
 import Lol.Stats
@@ -132,5 +133,5 @@ bestItem :: Comparator -> [Item] -> Item
 bestItem attr = maximumBy' (comparing (getL attr . itemStats))
 
 -- | Find the maximum build in a given attribute.
-maxBuild :: Comparator -> [[Item]] -> [Item]
-maxBuild attr = maximumBy' (comparing (getL attr . buildStats))
+-- maxBuild :: Comparator -> [Build] -> Build
+-- maxBuild attr = maximumBy' (comparing (getL attr . buildStats))

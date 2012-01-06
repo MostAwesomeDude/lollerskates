@@ -3,8 +3,10 @@ module Handler.Champ where
 import Import
 import Yesod.Form
 
+import Data.Lens.Common
 import qualified Data.Text as T
 
+import Lol.Build
 import Lol.Champs
 import Lol.Items
 import Lol.Stats
@@ -44,10 +46,12 @@ champForm = ChampParams
     <*> areq (selectField itemChoices) "Item 6" (Just Empty)
 
 champWidget :: Champ -> Level -> [Item] -> Widget
-champWidget c l b = let finisher = finalizeStats . (applyBuild b)
+champWidget c l b =
+    let build = makeBuild c l b
+        champstats = bChampStats ^$ build
     in [whamlet|
 <h2>#{show c} at Level #{l} with items #{show b}
-^{champStatsWidget $ finisher $ champStats c l}
+^{champStatsWidget champstats}
 |]
 
 repack :: ChampParams -> (Champ, Level, [Item])

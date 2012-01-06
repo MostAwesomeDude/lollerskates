@@ -33,25 +33,6 @@ data ItemStats = ItemStats { _iPrice :: Price
 
 $( makeLens ''ItemStats )
 
-addCS :: CoreStats -> CoreStats -> CoreStats
-addCS first second = let
-    h = _csHealth first + _csHealth second
-    m = _csMana first + _csMana second
-    ad = _csAttackDamage first + _csAttackDamage second
-    as = _csAttackSpeed first + _csAttackSpeed second
-    r = _csRange first + _csRange second
-    hr = _csHealthRegen first + _csHealthRegen second
-    mr = _csManaRegen first + _csManaRegen second
-    a = _csArmor first + _csArmor second
-    mres = _csMagicResist first + _csMagicResist second
-    ms = max (_csMovementSpeed first) (_csMovementSpeed second)
-    in CoreStats h m ad as r hr mr a mres ms
-
-csAtLevel :: Level -> CoreStats -> CoreStats
-csAtLevel level (CoreStats a b c d e f g h i j) =
-    let l = fromIntegral level
-    in CoreStats (a*l) (b*l) (c*l) (d*l) (e*l) (f*l) (g*l) (h*l) (i*l) (j*l)
-
 addES :: ExtendedStats -> ExtendedStats -> ExtendedStats
 addES first second = let
     ap = _esAbilityPower first + _esAbilityPower second
@@ -67,40 +48,6 @@ itemStats i =
         core = fromMaybe cs $ M.lookup i itemCoreStats
         extended = fromMaybe es $ M.lookup i itemExtendedStats
     in ItemStats price core extended
-
-addStats :: ItemStats -> ItemStats -> ItemStats
-addStats (ItemStats px csx esx) (ItemStats py csy esy) =
-    ItemStats (px + py) (addCS csx csy) (addES esx esy)
-
-champStats :: Champ -> Level -> ChampStats
-champStats c l =
-    let base = champBaseStats M.! c
-        levels = csAtLevel l (champLevelStats M.! c)
-    in ChampStats (addCS base levels) es
-
--- | Sum up the stats for a build.
-buildStats :: [Item] -> ItemStats
-buildStats = foldr1 addStats . map itemStats
-
--- | Apply a build to a champion.
-applyBuild :: [Item] -> ChampStats -> ChampStats
-applyBuild b (ChampStats ccs ces) =
-    let (ItemStats _ ics ies) = buildStats b
-    in ChampStats (addCS ccs ics) (addES ces ies)
-
--- | Finalize a champion build statistics.
-finalizeStats :: ChampStats -> ChampStats
-finalizeStats (ChampStats ccs ces) = runST $ do
-    core <- newSTRef ccs
-    -- Apply movement speed.
-    modifySTRef core $ flip finalizeMovementSpeed ces
-    -- All done!
-    core' <- readSTRef core
-    return $ ChampStats core' ces
-
--- Icky but will be cleaned up later.
--- makeChampStats :: Champ -> Level -> [Item] -> ChampStats
--- makeChampStats c l is = finalizeStats $ applyBuild is $ champStats c l
 
 -- Imperatively generate the statistics for a given champion.
 makeChampStats :: Champ -> Level -> [Item] -> ChampStats
