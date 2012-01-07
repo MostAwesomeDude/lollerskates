@@ -1,4 +1,4 @@
-module Lol.Loller where
+module Lol.Constraints where
 
 -- Yesod hides the Prelude. We want it back.
 import Prelude hiding ((.))

@@ -39,11 +39,11 @@ library
                      Lol.Bravery
                      Lol.Build
                      Lol.Champs
+                     Lol.Constraints
                      Lol.FD
                      Lol.Helpers
                      Lol.Items
                      Lol.Maths
-                     Lol.Loller
                      Lol.Stats
                      Lol.Stats.Champs
                      Lol.Stats.Items

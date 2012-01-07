@@ -7,9 +7,9 @@ import Data.Lens.Common
 
 import Lol.Build
 import Lol.Champs
+import Lol.Constraints
 import Lol.FD
 import Lol.Items
-import Lol.Loller
 import Lol.Stats
 
 import Widget
