@@ -16,6 +16,7 @@ import Data.Dynamic (Dynamic, toDyn)
 -- Import all relevant handler modules here.
 import Handler.Bravery
 import Handler.Champ
+import Handler.Item
 import Handler.Root
 
 -- This line actually creates our YesodSite instance. It is the second half

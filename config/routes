@@ -7,3 +7,4 @@
 
 /bravery BraveryR GET
 /champ ChampR GET
+/item ItemR GET

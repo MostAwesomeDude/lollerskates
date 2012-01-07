@@ -4,6 +4,7 @@ import Import
 
 import Data.Lens.Common
 
+import Lol.Items
 import Lol.Stats
 import Lol.Stats.Types
 
@@ -50,4 +51,10 @@ itemStatsWidget is = [whamlet|
 <h2>Item Stats
 ^{coreStatsWidget $ getL iCoreStats is}
 ^{extendedStatsWidget True $ getL iExtendedStats is}
+|]
+
+itemWidget :: Item -> Widget
+itemWidget i = [whamlet|
+<h2>#{show i}
+^{itemStatsWidget $ itemStats i}
 |]
