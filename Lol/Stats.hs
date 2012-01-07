@@ -31,15 +31,6 @@ data ItemStats = ItemStats { _iPrice :: Price
 
 $( makeLens ''ItemStats )
 
-addES :: ExtendedStats -> ExtendedStats -> ExtendedStats
-addES first second = let
-    ap = _esAbilityPower first + _esAbilityPower second
-    steal = _esLifeSteal first + _esLifeSteal second
-    vamp = _esSpellVamp first + _esSpellVamp second
-    cc = _esCriticalChance first + _esCriticalChance second
-    bms = _esBonusMovementSpeed first + _esBonusMovementSpeed second
-    in ExtendedStats ap steal vamp cc bms
-
 itemStats :: Item -> ItemStats
 itemStats i =
     let price = fromMaybe 0 $ M.lookup i itemPrice
