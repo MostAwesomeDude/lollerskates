@@ -1,3 +1,5 @@
+{-# LANGUAGE TemplateHaskell #-}
+
 module Lol.Stats where
 
 import Prelude hiding ((.))

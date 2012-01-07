@@ -1,3 +1,5 @@
+{-# LANGUAGE TemplateHaskell #-}
+
 module Lol.Stats.Types where
 
 import Prelude
