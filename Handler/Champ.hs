@@ -9,7 +9,6 @@ import qualified Data.Text as T
 import Lol.Build
 import Lol.Champs
 import Lol.Items
-import Lol.Stats
 
 import Widget
 

@@ -4,14 +4,12 @@ import Prelude hiding ((.))
 
 import Control.Category
 import Control.Monad
-import Control.Monad.ST
 import Control.Monad.Trans.State.Lazy
 import Data.Lens.Common
 import Data.Lens.Lazy
 import Data.Lens.Template
 import qualified Data.Map as M
 import Data.Maybe
-import Data.STRef
 
 import Lol.Champs
 import Lol.Items

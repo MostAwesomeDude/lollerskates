@@ -9,7 +9,6 @@ import Data.List
 import qualified Data.Map as Map
 import Data.Ord
 
-import Lol.Build
 import Lol.FD
 import Lol.Items
 import Lol.Stats

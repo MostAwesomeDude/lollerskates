@@ -6,8 +6,6 @@ module Lol.Stats.Champs where
 -- All of the champion quirks are tracked in champs.py, not in this file.
 -- ~ C.
 
-import Prelude
-
 import qualified Data.Map as M
 
 import Lol.Champs
