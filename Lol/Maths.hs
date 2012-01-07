@@ -40,3 +40,7 @@ finalizeMovementSpeed core extended =
     let bonus = 1 + (esBonusMovementSpeed ^$ extended)
         equalizer = equalizeMovementSpeed . (bonus *)
     in csMovementSpeed ^%= equalizer $ core
+
+-- | Clamp critical chance.
+finalizeCriticalChance :: Float -> Float
+finalizeCriticalChance = min 1.0

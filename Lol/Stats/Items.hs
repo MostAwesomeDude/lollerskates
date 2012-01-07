@@ -219,17 +219,17 @@ itemExtendedStats =
                , (BerserkersGreaves, es { _esBonusAttackSpeed = 0.25 })
                , (BilgewaterCutlass, es { _esLifeSteal = 15 })
                , (BlastingWand, es { _esAbilityPower = 40 })
-               , (BrawlersGloves, es { _esCriticalChance = 8 })
+               , (BrawlersGloves, es { _esCriticalChance = 0.08 })
                , (CloakAndDagger,
                   es { _esCriticalChance = 20, _esBonusAttackSpeed = 0.2 })
-               , (CloakOfAgility, es { _esCriticalChance = 18 })
+               , (CloakOfAgility, es { _esCriticalChance = 0.18 })
                , (Dagger, es { _esBonusAttackSpeed = 0.15 })
                , (DeathfireGrasp, es { _esAbilityPower = 60 })
                , (DoransBlade, es { _esLifeSteal = 3 })
                , (DoransRing, es { _esAbilityPower = 15 })
                , (EmblemOfValor, es { _esLifeSteal = 17 })
                , (ExecutionersCalling,
-                  es { _esLifeSteal = 18, _esCriticalChance = 15 })
+                  es { _esLifeSteal = 18, _esCriticalChance = 0.15 })
                , (FiendishCodex, es { _esAbilityPower = 30 })
                , (ForceOfNature, es { _esBonusMovementSpeed = 0.08 })
                , (GuinsoosRageblade, es { _esAbilityPower = 45 })
@@ -237,7 +237,7 @@ itemExtendedStats =
                , (HextechGunblade,
                   es { _esAbilityPower = 70, _esLifeSteal = 15 })
                , (HextechRevolver, es { _esAbilityPower = 40 })
-               , (InfinityEdge, es { _esCriticalChance = 25 })
+               , (InfinityEdge, es { _esCriticalChance = 0.25 })
                , (KagesLuckyPick, es { _esAbilityPower = 25 })
                , (LichBane,
                   es { _esAbilityPower = 80, _esBonusMovementSpeed = 0.07 })
@@ -248,7 +248,7 @@ itemExtendedStats =
                , (NashorsTooth,
                   es { _esAbilityPower = 55, _esBonusAttackSpeed = 0.5 })
                , (NeedlesslyLargeRod, es { _esAbilityPower = 80 })
-               , (PhantomDancer, es { _esCriticalChance = 30
+               , (PhantomDancer, es { _esCriticalChance = 0.30
                                     , _esBonusAttackSpeed = 0.55
                                     , _esBonusMovementSpeed = 0.15 })
                , (RabadonsDeathcap, es { _esAbilityPower = 140 })
@@ -261,15 +261,15 @@ itemExtendedStats =
                , (SwordOfTheDivine, es { _esBonusAttackSpeed = 0.6 })
                , (TheBlackCleaver, es { _esBonusAttackSpeed = 0.3 })
                , (TrinityForce, es { _esAbilityPower = 30
-                                   , _esCriticalChance = 15
+                                   , _esCriticalChance = 0.15
                                    , _esBonusAttackSpeed = 0.3
                                    , _esBonusMovementSpeed = 0.12 })
                , (VampiricScepter, es { _esLifeSteal = 12 })
                , (VoidStaff, es { _esAbilityPower = 70 })
                , (WillOfTheAncients, es { _esAbilityPower = 50 })
                , (WitsEnd, es { _esBonusAttackSpeed = 0.4 })
-               , (YoumuusGhostblade, es { _esCriticalChance = 15 })
-               , (Zeal, es { _esCriticalChance = 10
+               , (YoumuusGhostblade, es { _esCriticalChance = 0.15 })
+               , (Zeal, es { _esCriticalChance = 0.1
                            , _esBonusAttackSpeed = 0.2
                            , _esBonusMovementSpeed = 0.08 })
                , (ZhonyasHourglass, es { _esAbilityPower = 100 }) ]

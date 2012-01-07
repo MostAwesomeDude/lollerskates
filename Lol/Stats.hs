@@ -91,6 +91,8 @@ makeChampStats champ level items = execState pipeline (ChampStats base es)
             cCoreStats %= flip finalizeAttackSpeed ces
             -- Clamp movement speed. Requires extended stats.
             cCoreStats %= flip finalizeMovementSpeed ces
+            -- Clamp critical chance.
+            esCriticalChance . cExtendedStats %= finalizeCriticalChance
             return ()
         base :: CoreStats
         base = champBaseStats M.! champ
