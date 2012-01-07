@@ -81,7 +81,9 @@ makeChampStats champ level items = execState pipeline (ChampStats base es)
                 esLifeSteal += sum (map (esLifeSteal ^$) iestats)
                 esSpellVamp += sum (map (esSpellVamp ^$) iestats)
                 esCriticalChance += sum (map (esCriticalChance ^$) iestats)
-            -- Clamp movement speed.
+            -- Clamp attack speed.
+            csAttackSpeed . cCoreStats %= finalizeAttackSpeed
+            -- Clamp movement speed. Requires extended stats.
             ces <- access cExtendedStats
             cCoreStats %= flip finalizeMovementSpeed ces
             return ()

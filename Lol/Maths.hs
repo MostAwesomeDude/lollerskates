@@ -9,6 +9,10 @@ import Lol.Stats.Types
 -- Throughout this module, the verb "to finalize" is specifically used to
 -- refer to actions which result in the final, complete tally of a statistic.
 
+-- | Clamp attack speed.
+finalizeAttackSpeed :: Float -> Float
+finalizeAttackSpeed = min 2.5
+
 -- | Turn a "raw" movement speed number into a final movement speed, by
 --   applying a handful of equalizers which pull it towards [220, 415].
 equalizeMovementSpeed :: Float -> Float
