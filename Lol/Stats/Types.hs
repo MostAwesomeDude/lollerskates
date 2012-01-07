@@ -24,6 +24,7 @@ data ExtendedStats = ExtendedStats { _esAbilityPower :: Float
                                    , _esLifeSteal :: Float
                                    , _esSpellVamp :: Float
                                    , _esCriticalChance :: Float
+                                   , _esBonusAttackSpeed :: Float
                                    , _esBonusMovementSpeed :: Float }
     deriving (Show)
 

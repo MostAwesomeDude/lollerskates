@@ -10,8 +10,18 @@ import Lol.Stats.Types
 -- refer to actions which result in the final, complete tally of a statistic.
 
 -- | Clamp attack speed.
-finalizeAttackSpeed :: Float -> Float
-finalizeAttackSpeed = min 2.5
+equalizeAttackSpeed :: Float -> Float
+equalizeAttackSpeed = min 2.5
+
+-- | Sum up movement speed bonuses for given core and extended stats.
+--   The formula is to sum up base AS, multiply by percentage bonus AS, and
+--   then apply an equalizer.
+--   AS_f = equalize((AS_b + AS_flat) * sum(AS_bonus))
+finalizeAttackSpeed :: CoreStats -> ExtendedStats -> CoreStats
+finalizeAttackSpeed core extended =
+    let bonus = 1 + (esBonusAttackSpeed ^$ extended)
+        equalizer = equalizeAttackSpeed . (bonus *)
+    in csAttackSpeed ^%= equalizer $ core
 
 -- | Turn a "raw" movement speed number into a final movement speed, by
 --   applying a handful of equalizers which pull it towards [220, 415].

@@ -54,8 +54,6 @@ makeChampStats champ level items = execState pipeline (ChampStats base es)
                 csMana += (csMana ^$ perlevel) * flevel
                 csManaRegen += (csManaRegen ^$ perlevel) * flevel
                 csAttackDamage += (csAttackDamage ^$ perlevel) * flevel
-                -- XXX this isn't right.
-                csAttackSpeed += (csAttackSpeed ^$ perlevel) * flevel
                 csArmor += (csArmor ^$ perlevel) * flevel
                 csMagicResist += (csMagicResist ^$ perlevel) * flevel
                 -- Movement speed would go here, but no champions have
@@ -63,6 +61,11 @@ makeChampStats champ level items = execState pipeline (ChampStats base es)
                 -- Quirk: Tristana is the only champion who gains range per
                 -- level. 9 per level, not including level 1.
                 when (champ == Tristana) (void $ csRange += 9 * (flevel - 1))
+            -- Attack speed per level is calculated as bonus attack speed
+            -- instead of core attack speed, and doesn't provide a stack at
+            -- level 1.
+            esBonusAttackSpeed . cExtendedStats ~=
+                (csAttackSpeed ^$ perlevel) * (flevel - 1)
             -- Now grab all of the stats from the items, and add them in.
             focus cCoreStats $ do
                 csHealth += sum (map (csHealth ^$) icstats)
@@ -70,8 +73,8 @@ makeChampStats champ level items = execState pipeline (ChampStats base es)
                 csMana += sum (map (csMana ^$) icstats)
                 csManaRegen += sum (map (csManaRegen ^$) icstats)
                 csAttackDamage += sum (map (csAttackDamage ^$) icstats)
-                -- XXX not even close.
-                csAttackSpeed += sum (map (csAttackSpeed ^$) icstats)
+                -- Attack speed would go here, but no items increase base
+                -- attack speed.
                 csArmor += sum (map (csArmor ^$) icstats)
                 csMagicResist += sum (map (csMagicResist ^$) icstats)
                 -- Movement speed is done later. Range isn't provided by any
@@ -81,10 +84,12 @@ makeChampStats champ level items = execState pipeline (ChampStats base es)
                 esLifeSteal += sum (map (esLifeSteal ^$) iestats)
                 esSpellVamp += sum (map (esSpellVamp ^$) iestats)
                 esCriticalChance += sum (map (esCriticalChance ^$) iestats)
-            -- Clamp attack speed.
-            csAttackSpeed . cCoreStats %= finalizeAttackSpeed
-            -- Clamp movement speed. Requires extended stats.
+                esBonusAttackSpeed += sum (map (esBonusAttackSpeed ^$) iestats)
+                esBonusMovementSpeed += sum (map (esBonusMovementSpeed ^$) iestats)
+            -- Clamp attack speed. Requires extended stats.
             ces <- access cExtendedStats
+            cCoreStats %= flip finalizeAttackSpeed ces
+            -- Clamp movement speed. Requires extended stats.
             cCoreStats %= flip finalizeMovementSpeed ces
             return ()
         base :: CoreStats

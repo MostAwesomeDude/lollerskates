@@ -9,7 +9,7 @@ cs :: CoreStats
 cs = CoreStats 0 0 0 0.0 0 0 0.0 0 0 0
 
 es :: ExtendedStats
-es = ExtendedStats 0 0 0 0 0
+es = ExtendedStats 0 0 0 0 0 0
 
 -- Tables for item statistics. Not even close to ideal, but ATM I can't think
 -- of a better way to do it.
