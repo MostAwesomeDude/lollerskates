@@ -216,11 +216,14 @@ itemExtendedStats =
                , (ArchangelsStaff, es { _esAbilityPower = 45 })
                , (AtmasImpaler, es { _esCriticalChance = 18 })
                , (AvariceBlade, es { _esCriticalChance = 12 })
+               , (BerserkersGreaves, es { _esBonusAttackSpeed = 0.25 })
                , (BilgewaterCutlass, es { _esLifeSteal = 15 })
                , (BlastingWand, es { _esAbilityPower = 40 })
                , (BrawlersGloves, es { _esCriticalChance = 8 })
-               , (CloakAndDagger, es { _esCriticalChance = 20 })
+               , (CloakAndDagger,
+                  es { _esCriticalChance = 20, _esBonusAttackSpeed = 0.2 })
                , (CloakOfAgility, es { _esCriticalChance = 18 })
+               , (Dagger, es { _esBonusAttackSpeed = 0.15 })
                , (DeathfireGrasp, es { _esAbilityPower = 60 })
                , (DoransBlade, es { _esLifeSteal = 3 })
                , (DoransRing, es { _esAbilityPower = 15 })
@@ -238,23 +241,35 @@ itemExtendedStats =
                , (KagesLuckyPick, es { _esAbilityPower = 25 })
                , (LichBane,
                   es { _esAbilityPower = 80, _esBonusMovementSpeed = 0.07 })
-               , (Malady, es { _esAbilityPower = 25 })
+               , (Malady,
+                  es { _esAbilityPower = 25, _esBonusAttackSpeed = 0.5 })
                , (MoonflairSpellblade, es { _esAbilityPower = 50 })
                , (MorellosEvilTome, es { _esAbilityPower = 75 })
+               , (NashorsTooth,
+                  es { _esAbilityPower = 55, _esBonusAttackSpeed = 0.5 })
                , (NeedlesslyLargeRod, es { _esAbilityPower = 80 })
-               , (PhantomDancer,
-                  es { _esCriticalChance = 30, _esBonusMovementSpeed = 0.15 })
+               , (PhantomDancer, es { _esCriticalChance = 30
+                                    , _esBonusAttackSpeed = 0.55
+                                    , _esBonusMovementSpeed = 0.15 })
                , (RabadonsDeathcap, es { _esAbilityPower = 140 })
+               , (RecurveBow, es { _esBonusAttackSpeed = 0.4 })
                , (RodOfAges, es { _esAbilityPower = 60 })
                , (RylaisCrystalScepter, es { _esAbilityPower = 80 })
                , (Sheen, es { _esAbilityPower = 25 })
+               , (StarksFervor, es { _esBonusAttackSpeed = 0.2 })
+               , (Stinger, es { _esBonusAttackSpeed = 0.4 })
+               , (SwordOfTheDivine, es { _esBonusAttackSpeed = 0.6 })
+               , (TheBlackCleaver, es { _esBonusAttackSpeed = 0.3 })
                , (TrinityForce, es { _esAbilityPower = 30
                                    , _esCriticalChance = 15
+                                   , _esBonusAttackSpeed = 0.3
                                    , _esBonusMovementSpeed = 0.12 })
                , (VampiricScepter, es { _esLifeSteal = 12 })
                , (VoidStaff, es { _esAbilityPower = 70 })
                , (WillOfTheAncients, es { _esAbilityPower = 50 })
+               , (WitsEnd, es { _esBonusAttackSpeed = 0.4 })
                , (YoumuusGhostblade, es { _esCriticalChance = 15 })
-               , (Zeal,
-                  es { _esCriticalChance = 10, _esBonusMovementSpeed = 0.08 })
+               , (Zeal, es { _esCriticalChance = 10
+                           , _esBonusAttackSpeed = 0.2
+                           , _esBonusMovementSpeed = 0.08 })
                , (ZhonyasHourglass, es { _esAbilityPower = 100 }) ]
