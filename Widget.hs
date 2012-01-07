@@ -41,6 +41,7 @@ champStatsWidget cs = [whamlet|
 <h2>Champion Stats
 ^{coreStatsWidget $ getL cCoreStats cs}
 ^{extendedStatsWidget False $ getL cExtendedStats cs}
+<p> DPS: #{dps cs}
 |]
 
 itemStatsWidget :: ItemStats -> Widget

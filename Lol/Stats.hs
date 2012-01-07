@@ -95,3 +95,15 @@ makeChampStats champ level items = execState pipeline (ChampStats base es)
         icstats = map (getL iCoreStats . itemStats) items
         iestats :: [ExtendedStats]
         iestats = map (getL iExtendedStats . itemStats) items
+
+-- | Calculate the DPS for a given champion.
+--   Presumably, the stats have already been calculated from a build, but raw
+--   champion stats are fine too.
+--   The formula that is used is damage times attacks per second, modulated by
+--   the odds of a critical strike: (AD + AD * CC) * AS
+dps :: ChampStats -> Float
+dps cs =
+    let ad = csAttackDamage . cCoreStats ^$ cs
+        as = csAttackSpeed . cCoreStats ^$ cs
+        cc = esCriticalChance . cExtendedStats ^$ cs
+    in (ad + ad * cc) * as
