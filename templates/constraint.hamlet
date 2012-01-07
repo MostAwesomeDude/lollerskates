@@ -1,0 +1,4 @@
+<h1>Constraint Solver
+<p>Calculating the best DPS build...
+<p>#{show build}
+^{champStatsWidget $ getL bChampStats build}

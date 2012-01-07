@@ -3,6 +3,8 @@
     <li>
         <a href=@{BraveryR}>Ultimate Bravery!
     <li>
+        <a href=@{ConstraintR}>Solve Constraints
+    <li>
         <a href=@{ChampR}>Champion Statistics
     <li>
         <a href=@{ItemR}>Item Statistics

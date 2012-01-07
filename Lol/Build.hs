@@ -14,6 +14,7 @@ data Build = Build { _bChamp :: Champ
                    , _bLevel :: Level
                    , _bItems :: BuildItems
                    , _bChampStats :: ChampStats }
+    deriving (Show)
 
 $( makeLens ''Build )
 

@@ -16,6 +16,7 @@ import Data.Dynamic (Dynamic, toDyn)
 -- Import all relevant handler modules here.
 import Handler.Bravery
 import Handler.Champ
+import Handler.Constraint
 import Handler.Item
 import Handler.Root
 

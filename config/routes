@@ -6,5 +6,6 @@
 / RootR GET
 
 /bravery BraveryR GET
+/constraint ConstraintR GET
 /champ ChampR GET
 /item ItemR GET

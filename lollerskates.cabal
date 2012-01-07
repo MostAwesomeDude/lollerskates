@@ -33,6 +33,7 @@ library
                      Settings.StaticFiles
                      Handler.Bravery
                      Handler.Champ
+                     Handler.Constraint
                      Handler.Item
                      Handler.Root
                      Lol.Bravery
