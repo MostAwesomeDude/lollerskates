@@ -24,8 +24,10 @@ buildList :: [[Item]]
 buildList = runFD $ do
     build <- defaultBuilds
     head build `satisfies` isBoots
+    mapM_ (flip satisfies $ not . isBoots) (tail build)
     mapM_ (flip lacksValue Empty) (tail build)
-    mapM_ (flip satisfies improvesDPS) (tail build)
+    mapM_ (flip satisfies improvesDPS) build
+    orderedEx build
     labelling build
 
 createBestBuild :: Build
