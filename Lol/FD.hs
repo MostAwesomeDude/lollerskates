@@ -11,6 +11,10 @@ module Lol.FD (
     newVar,       -- Create a new FDVar
     newVars,      -- Create multiple FDVars
     hasValue,     -- Constrain a FDVar to a specific value
+    hasValues,    -- Constrain a FDVar to a list of values
+    lacksValue,   -- Constrain a FDVar to not have a value
+    lacksValues,  -- Constrain a FDVar to not have any of a list of values
+    satisfies,    -- Constrain a FDVar to satisfy a predicate
     same,         -- Constrain two FDVars to be the same
     different,    -- Constrain two FDVars to be different
     allDifferent, -- Constrain a list of FDVars to be different
@@ -116,6 +120,34 @@ var `hasValue` val = do
     vals <- lookup var
     guard $ fromEnum val `IntSet.member` vals
     let i = IntSet.singleton $ fromEnum val
+    when (i /= vals) $ update var i
+
+-- Constrain a variable to a list of values.
+hasValues :: (Enum a) => FDVar s -> [a] -> FD s ()
+var `hasValues` val = do
+    vals <- lookup var
+    guard $ all (\x -> fromEnum x `IntSet.member` vals) val
+    let i = IntSet.fromList $ map fromEnum val
+    when (i /= vals) $ update var i
+
+-- Constrain a variable to not have a value.
+lacksValue :: (Enum a) => FDVar s -> a -> FD s ()
+var `lacksValue` val = do
+    vals <- lookup var
+    let i = IntSet.delete (fromEnum val) vals
+    guard $ not $ IntSet.null i
+    when (i /= vals) $ update var i
+
+-- Constrain a variable to not have any values in a list.
+lacksValues :: (Enum a) => FDVar s -> [a] -> FD s ()
+var `lacksValues` vals = mapM_ (lacksValue var) vals
+
+-- Constrain a variable with a filter-style predicate.
+satisfies :: (Enum a) => FDVar s -> (a -> Bool) -> FD s ()
+var `satisfies` pred = do
+    vals <- lookup var
+    let i = IntSet.filter (pred . toEnum) vals
+    guard $ not $ IntSet.null i
     when (i /= vals) $ update var i
 
 -- Constrain two variables to have the same value.
