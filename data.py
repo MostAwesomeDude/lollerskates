@@ -6,10 +6,18 @@ from string import ascii_letters
 from lxml.html import fromstring
 import requests
 
-url = "http://leagueoflegends.wikia.com/wiki/Base_champion_statistics"
-request = requests.get(url)
-html = request.content
-document = fromstring(html)
+
+def retrieve(name):
+    print "Retrieving", name, "..."
+    url = "http://leagueoflegends.wikia.com/wiki/%s" % name
+    request = requests.get(url)
+    html = request.content
+    print "Parsing", name, "..."
+    document = fromstring(html)
+    return document
+
+
+document = retrieve("Base_champion_statistics")
 
 table = document.xpath("//table")[1]
 # In the future, if you ever need the magic incantation to get the table
@@ -60,10 +68,7 @@ for i, champion in enumerate(champions):
         clauses[stat].append("champ_%s(%d, %f)." % (stat, i, champion[stat]))
 
 
-url = "http://leagueoflegends.wikia.com/wiki/Template:Items"
-request = requests.get(url)
-html = request.content
-document = fromstring(html)
+document = retrieve("Template:Items")
 
 trs = document.xpath("//table/tr")[1:-3]
 l = [x.text for tr in trs for x in tr.xpath("td/span/a/span")]
