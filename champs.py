@@ -70,3 +70,4 @@ for clause in clauses.itervalues():
         print datum
     print ""
 
+print "champ_max(%d)." % (len(champions) - 1)
