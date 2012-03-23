@@ -5,7 +5,6 @@
  * All of the champion quirks are tracked in champs.py, not in this file.
  * ~ C. */
 
-
 champ_healthg(0, 80.000000).
 champ_healthg(1, 85.000000).
 champ_healthg(2, 102.000000).
@@ -1831,3 +1830,4 @@ champ_ad(93, 54.000000).
 champ_ad(94, 48.600000).
 
 champ_max(94).
+
