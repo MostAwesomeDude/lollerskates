@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 from collections import defaultdict
+import re
 from string import ascii_letters
 
 from lxml.html import fromstring
@@ -77,6 +78,15 @@ l.sort()
 for i, item in enumerate(l):
     name = "".join(c.lower() for c in item if c in ascii_letters)
     clauses["item_name"].append("item(%d, %s)." % (i, name))
+    document = retrieve(item)
+    for tr in document.xpath("//table/tr"):
+        text = tr.text_content()
+        if "Effect" not in text:
+            continue
+        m = re.search("\+(\d+) health", text)
+        if m:
+            clauses["item_health"].append("item_health(%d, %s)."
+                % (i, m.groups()[0]))
 
 handle = open("data.pl", "wb")
 
