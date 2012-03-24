@@ -76,17 +76,17 @@ l = [x.text for tr in trs for x in tr.xpath("td/span/a/span")]
 l.sort()
 
 res = {
-    "item_ad": "\+(\d+) attack damage$",
-    "item_ap": "\+(\d+) ability power$",
-    "item_armor": "\+(\d+) armor$",
-    "item_as": "\+(\d+)% attack speed$",
-    "item_cc": "\+(\d+)% critial strike chance$",
-    "item_health": "\+(\d+) health$",
-    "item_hregen": "\+(\d+) health regeneration$",
+    "item_ad": "\+(\d+) attack damage",
+    "item_ap": "\+(\d+) ability power",
+    "item_armor": "\+(\d+) armor",
+    "item_as": "\+(\d+)% attack speed",
+    "item_cc": "\+(\d+)% critial strike chance",
+    "item_health": "\+(\d+) health(?! regeneration)",
+    "item_hregen": "\+(\d+) health regeneration",
     "item_lifesteal": "\+(\d+)% life steal",
-    "item_mana": "\+(\d+) mana$",
-    "item_mr": "\+(\d+) magic resistance$",
-    "item_mregen": "\+(\d+(\.\d+)?) mana regeneration$",
+    "item_mana": "\+(\d+) mana(?! regeneration)",
+    "item_mr": "\+(\d+) magic resistance",
+    "item_mregen": "\+(\d+(\.\d+)?) mana regeneration",
     "item_spellvamp": "\+(\d+)% spell vamp",
 }
 
