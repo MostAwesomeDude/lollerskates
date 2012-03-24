@@ -1082,6 +1082,22 @@ item_ap(90, 140).
 item_ap(120, 70).
 item_ap(123, 50).
 
+item_armor(19, 45).
+item_armor(23, 18).
+item_armor(33, 25).
+item_armor(78, 25).
+item_armor(115, 100).
+item_armor(129, 50).
+
+item_as(11, 25).
+item_as(24, 15).
+item_as(57, 40).
+item_as(63, 40).
+item_as(65, 50).
+item_as(92, 40).
+item_as(106, 40).
+item_as(110, 30).
+
 item_health(34, 275).
 item_health(40, 700).
 item_health(41, 430).
@@ -1107,6 +1123,16 @@ item_hregen(94, 8).
 item_hregen(121, 20).
 item_hregen(122, 30).
 
+item_lifesteal(12, 15).
+item_lifesteal(26, 3).
+item_lifesteal(35, 18).
+item_lifesteal(49, 15).
+item_lifesteal(87, 5).
+item_lifesteal(98, 15).
+item_lifesteal(111, 12).
+item_lifesteal(118, 10).
+item_lifesteal(125, 12).
+
 item_mana(10, 375).
 item_mana(18, 325).
 item_mana(39, 500).
@@ -1115,6 +1141,18 @@ item_mana(80, 350).
 item_mana(95, 525).
 item_mana(99, 200).
 item_mana(100, 250).
+
+item_mr(0, 57).
+item_mr(1, 24).
+item_mr(20, 30).
+item_mr(43, 38).
+item_mr(48, 30).
+item_mr(69, 36).
+item_mr(77, 48).
+item_mr(79, 24).
+item_mr(89, 56).
+item_mr(105, 30).
+item_mr(124, 30).
 
 item_mregen(25, 10).
 item_mregen(27, 5).
