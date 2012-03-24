@@ -75,6 +75,21 @@ trs = document.xpath("//table/tr")[1:-3]
 l = [x.text for tr in trs for x in tr.xpath("td/span/a/span")]
 l.sort()
 
+res = {
+    "item_ad": "\+(\d+) attack damage$",
+    "item_ap": "\+(\d+) ability power$",
+    "item_armor": "\+(\d+) armor$",
+    "item_as": "\+(\d+)% attack speed$",
+    "item_cc": "\+(\d+)% critial strike chance$",
+    "item_health": "\+(\d+) health$",
+    "item_hregen": "\+(\d+) health regeneration$",
+    "item_lifesteal": "\+(\d+)% life steal",
+    "item_mana": "\+(\d+) mana$",
+    "item_mr": "\+(\d+) magic resistance$",
+    "item_mregen": "\+(\d+(\.\d+)?) mana regeneration$",
+    "item_spellvamp": "\+(\d+)% spell vamp",
+}
+
 for i, item in enumerate(l):
     name = "".join(c.lower() for c in item if c in ascii_letters)
     clauses["item_name"].append("item(%d, %s)." % (i, name))
@@ -83,10 +98,11 @@ for i, item in enumerate(l):
         text = tr.text_content()
         if "Effect" not in text:
             continue
-        m = re.search("\+(\d+) health", text)
-        if m:
-            clauses["item_health"].append("item_health(%d, %s)."
-                % (i, m.groups()[0]))
+        for clause, regex in res.iteritems():
+            m = re.search(regex, text, re.M)
+            if m:
+                clauses[clause].append("%s(%d, %s)."
+                    % (clause, i, m.groups()[0]))
 
 handle = open("data.pl", "wb")
 
@@ -99,8 +115,8 @@ handle.write("""/* set filetype=prolog syntax=prolog */
 
 """)
 
-for clause in clauses.itervalues():
-    for datum in clause:
+for clause in sorted(clauses):
+    for datum in clauses[clause]:
         handle.write(datum)
         handle.write("\n")
     handle.write("\n")
